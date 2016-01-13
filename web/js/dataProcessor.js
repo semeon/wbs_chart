@@ -31,32 +31,38 @@ export function linesToGraphObjects(lines) {
 	for (var i=0; i<lines.length; i++) {
 		var line = lines[i];
 		if (S(line).length > 0) {
-			var dataItem = {};
+			
+			// Create node
+			var nodeObject = {};
 			var level = S(line).count(indentSymbol);
 			var label = S(line).replaceAll(indentSymbol, "").s;
 
-			dataItem.type = "node";
-			dataItem.level = level;
-			dataItem.id = "n"+i;
-			dataItem.label = label;
+			nodeObject.type = "node";
+			nodeObject.level = level;
+			nodeObject.id = "n"+i;
+			nodeObject.label = label;
 
 			if (level == 0 || !prevNode) {
-				dataItem.parentId = null;
-				lastParentByLevel[level] = dataItem;
+				nodeObject.parentId = null;
+				lastParentByLevel[level] = nodeObject;
 
 			} else {
 				if (prevNode.level < level) {
-					dataItem.parentId = prevNode.id;
-					lastParentByLevel[level] = dataItem;
+					nodeObject.parentId = prevNode.id;
+					lastParentByLevel[level] = nodeObject;
 				} else {
-					dataItem.parentId = lastParentByLevel[level-1];
+					nodeObject.parentId = lastParentByLevel[level-1].id;
 				}
 			}
 
-			console.dir(dataItem);
+			console.dir(nodeObject);
 
-			prevNode = dataItem;
-			resultArray.push(dataItem);
+
+			// Create node
+
+
+			prevNode = nodeObject;
+			resultArray.push(nodeObject);
 		}
 	}
 
