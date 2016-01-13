@@ -20,13 +20,16 @@ export function textToLines() {
 
 export function linesToGraphObjects(lines) {
 
-	console.dir("Adding data items:");
+	console.dir("Adding data items..");
 
 	var resultArray = [];
 	
 	var lastParentByLevel = {};
 	lastParentByLevel[0] = null;
 	var prevNode = null;
+
+	var prevNodeLevel = null;
+
 
 	for (var i=0; i<lines.length; i++) {
 		var line = lines[i];
@@ -41,11 +44,11 @@ export function linesToGraphObjects(lines) {
 			nodeObject.level = level;
 			nodeObject.id = "n"+i;
 			nodeObject.label = label;
+			nodeObject.parentId = null;
 
 			if (level == 0 || !prevNode) {
 				nodeObject.parentId = null;
 				lastParentByLevel[level] = nodeObject;
-
 			} else {
 				if (prevNode.level < level) {
 					nodeObject.parentId = prevNode.id;
@@ -55,19 +58,29 @@ export function linesToGraphObjects(lines) {
 				}
 			}
 
-			console.dir(nodeObject);
 
-
-			// Create node
-
-
+			// Save node
 			prevNode = nodeObject;
 			resultArray.push(nodeObject);
+
+			// Create and save edge
+			if (nodeObject.parentId && nodeObject.id) {
+				var edgeObject = {};
+				edgeObject.type = "edge";
+				edgeObject.startNodeId = nodeObject.parentId;
+				edgeObject.endNodeId = nodeObject.id;
+
+				// console.dir(edgeObject);
+
+				resultArray.push(edgeObject);
+			}
+
+
 		}
 	}
 
 	// console.dir("Result graph Objects:");
-	console.dir(resultArray);
+	// console.dir(resultArray);
 
 	return resultArray;
 }

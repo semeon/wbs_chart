@@ -31,16 +31,17 @@ export function graphController(id, svgSelector) {
 		// g.setEdge("startNodeId", "endNodeId", { arrowhead: "undirected" });
 
 		console.log("> generateData()");
+
 		console.dir(data);
 
-		for (var i=0; i<data.length; i++ ) {
+		for (var i=0; i<data.length; i++) {
 			var item = data[i];
 			if (item!=undefined) {
 				if (item.type == "node" ) {
-					g.setNode(item.id, { shape: "rect", label: item.label});
+					g.setNode(item.id, { shape: "rect", label: item.label });
 				}
 				if (item.type == "edge" ) {
-					g.setNode(item.startNodeId, item.endNodeId);
+					g.setEdge(item.startNodeId, item.endNodeId, { arrowhead: "undirected" });
 				}
 			}
 		}
