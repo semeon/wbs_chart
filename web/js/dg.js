@@ -1,8 +1,4 @@
-export function mytest(x, y) {
-  return x + y;
-}
 
-export var myvar = 12;
 
 /**
 var generateChartData = function(g, data) {

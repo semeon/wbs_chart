@@ -30,11 +30,14 @@ export function graphController(id, svgSelector) {
 		// g.setNode("caption", { shape: "rect" });
 		// g.setEdge("startNodeId", "endNodeId", { arrowhead: "undirected" });
 
+		console.log("> generateData()");
+		console.dir(data);
+
 		for (var i=0; i<data.length; i++ ) {
 			var item = data[i];
 			if (item!=undefined) {
 				if (item.type == "node" ) {
-					g.setNode(item.caption, { shape: "rect" });
+					g.setNode(item.id, { shape: "rect", label: item.label});
 				}
 				if (item.type == "edge" ) {
 					g.setNode(item.startNodeId, item.endNodeId);
