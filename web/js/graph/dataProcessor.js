@@ -29,9 +29,6 @@ export function linesToGraphObjects(lines) {
 
 
 	for (var i=0; i<lines.length; i++) {
-
-		console.dir("-- i: " + i + " -----------");
-
 		var line = lines[i];
 		if (S(line).length > 0) {
 			
@@ -71,12 +68,6 @@ export function linesToGraphObjects(lines) {
 				edgeObject.endNodeId = nodeObject.id;
 				resultArray.push(edgeObject);
 			}
-
-			console.dir(nodeObject);
-			console.dir(edgeObject);
-
-
-
 		}
 	}
 

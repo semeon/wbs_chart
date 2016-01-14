@@ -17,3 +17,14 @@ function GraphController() {
 	}
 }
 
+export function draw(text) {
+	var textLines = dataParser.textToLines(text);
+	var graphData = dataParser.linesToGraphObjects(textLines);
+
+	if (graphData.length>0) {
+		var graphController = new dagre.graphController("g1", "svg#g1");
+		graphController.draw(graphData);
+	}
+}
+
+

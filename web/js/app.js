@@ -1,8 +1,8 @@
 import * as graph from "js/graph/graphController.js";
 import * as textData from "js/graph/defaultData.js";
 
-var rawText = textData.text1;
-graph.controller.draw(rawText);
+
+graph.draw(textData.text1);
 
 
 /**
