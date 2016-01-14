@@ -1,6 +1,6 @@
 // https://github.com/cpettitt/dagre-d3/wiki#demos
+// import "libs/dagre/dagre-d3.min.js";
 
-import "libs/dagre/dagre-d3.min.js";
 
 export function graphController(id, svgSelector) {
 

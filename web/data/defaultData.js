@@ -34,4 +34,15 @@ export var text1 =
 		8.3 Make site live
 `;
 
-export var text2 = "";
+export var text2 = 
+`WBS
+	AAA
+		BBB
+			CCC
+		DDD
+	EEE
+		FFF
+			GGG
+		HHH
+
+`;
