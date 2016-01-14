@@ -1,9 +1,6 @@
-import * as textData from "js/data.js";
-
 var indentSymbol = "|";
-var rawText = textData.text1;
 
-export function textToLines() {
+export function textToLines(rawText) {
 	console.log("reading text..");
 
 	var processedText = rawText;
@@ -24,14 +21,17 @@ export function linesToGraphObjects(lines) {
 
 	var resultArray = [];
 	
-	var lastParentByLevel = {};
-	lastParentByLevel[0] = null;
+	var lastParentIdByLevel = {};
+	lastParentIdByLevel[0] = null;
 	var prevNode = null;
 
 	var prevNodeLevel = null;
 
 
 	for (var i=0; i<lines.length; i++) {
+
+		console.dir("-- i: " + i + " -----------");
+
 		var line = lines[i];
 		if (S(line).length > 0) {
 			
@@ -48,16 +48,16 @@ export function linesToGraphObjects(lines) {
 
 			if (level == 0 || !prevNode) {
 				nodeObject.parentId = null;
-				lastParentByLevel[level] = nodeObject;
+				lastParentIdByLevel[level] = nodeObject.id;
 			} else {
 				if (prevNode.level < level) {
 					nodeObject.parentId = prevNode.id;
-					lastParentByLevel[level] = nodeObject;
+					lastParentIdByLevel[level-1] = prevNode.id;
+					// lastParentIdByLevel[level] = nodeObject.id; - seems to be uneccessary
 				} else {
-					nodeObject.parentId = lastParentByLevel[level-1].id;
+					nodeObject.parentId = lastParentIdByLevel[level-1];
 				}
 			}
-
 
 			// Save node
 			prevNode = nodeObject;
@@ -69,11 +69,12 @@ export function linesToGraphObjects(lines) {
 				edgeObject.type = "edge";
 				edgeObject.startNodeId = nodeObject.parentId;
 				edgeObject.endNodeId = nodeObject.id;
-
-				// console.dir(edgeObject);
-
 				resultArray.push(edgeObject);
 			}
+
+			console.dir(nodeObject);
+			console.dir(edgeObject);
+
 
 
 		}

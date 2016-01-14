@@ -1,12 +1,8 @@
-import * as Dagre from "js/dGraph.js";
-import * as DataParser from "js/dataProcessor.js";
+import * as graph from "js/graph/graphController.js";
+import * as textData from "js/graph/defaultData.js";
 
-var textLines = DataParser.textToLines();
-var graphData = DataParser.linesToGraphObjects(textLines);
-
-var graphController = new Dagre.graphController("g1", "svg#g1");
-graphController.draw(graphData);
-
+var rawText = textData.text1;
+graph.controller.draw(rawText);
 
 
 /**

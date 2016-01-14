@@ -1,9 +1,16 @@
-#container {
-	border: 1px solid gray;
+body {
+  margin-top: 60px;
 }
 
+div#data-panel, div#graph-panel {
+  border: 0px solid #999;
+  min-height: 600px;
+}
+
+
+
 svg {
-  border: 1px solid #999;
+  border: 0px solid #999;
   overflow: hidden;
 }
 
@@ -36,7 +43,7 @@ svg {
 
 .edgePath path.path {
   stroke: #333;
-  stroke-width: 1.5px;
+  stroke-width: 1px;
   fill: none;
 }
 
