@@ -2,10 +2,18 @@ body {
   margin-top: 60px;
 }
 
-div#data-panel, div#graph-panel {
+
+div#graph-panel {
   border: 0px solid #999;
   min-height: 600px;
 }
+
+
+
+texarea {
+  border:0px;
+}
+
 
 
 

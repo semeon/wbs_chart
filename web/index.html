@@ -37,13 +37,22 @@
   <div class="container">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-2" id="data-panel">
+          <div class="col-md-4"  id="data-panel">
             
 
+
           </div>
-          <div class="col-md-10" id="graph-panel">
-     
-            <svg id="g1" width="900"><g/></svg>
+
+          <div class="col-md-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Graph</h3>
+              </div>
+              <div class="panel-body" id="graph-panel">
+                <svg id="g1" width="600"><g/></svg>
+              </div>
+              <div class="panel-footer">Panel footer</div>
+            </div>
 
           </div>
         </div>
@@ -59,14 +68,14 @@
 
   <!-- React 0.14 
   -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
 
   <!-- React 0.13 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
   -->
-
 
   <!-- WTF is this?
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>

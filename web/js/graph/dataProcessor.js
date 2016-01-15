@@ -5,6 +5,7 @@ export function textToLines(rawText) {
 
 	var processedText = rawText;
 	processedText = S(processedText).replaceAll('\t', indentSymbol).s;
+	processedText = S(processedText).replaceAll('>', indentSymbol).s;
 	processedText = S(processedText).trim().s;
 
 	var lines = [];
