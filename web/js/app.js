@@ -1,16 +1,20 @@
 import * as graph from "js/graph/graphController.js";
 import * as textData from "data/defaultData.js";
-import * as cLib from "js/viewComponents/DataPanel.js";
+import {DataPanel} from "js/viewComponents/DataPanel.js";
+import {GraphPanel} from "js/viewComponents/GraphPanel.js";
 
+var defaultData = textData.text2;
 
-graph.draw(textData.text2);
-
-
-// console.log(cLib.CommentBox);
-// var textInput = Components.TextInput;
-
+var renderGraphPanel = function(text) {
+	var dismounted = ReactDOM.unmountComponentAtNode(document.getElementById('graph-panel'));
+	ReactDOM.render(
+		<GraphPanel graphBuilder={graph} graphData={text}/>,
+		document.getElementById('graph-panel')
+	);
+}
 
 ReactDOM.render(
-	<cLib.DataPanel defValue={textData.text2} />,
+	<DataPanel defValue={defaultData} draw={renderGraphPanel}/>,
 	document.getElementById('data-panel')
 );
+

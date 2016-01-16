@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
-
 </head>
 
 
@@ -37,40 +36,30 @@
   <div class="container">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-4"  id="data-panel">
-            
-
+          <div class="col-md-3"  id="data-panel">
 
           </div>
 
-          <div class="col-md-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Graph</h3>
-              </div>
-              <div class="panel-body" id="graph-panel">
-                <svg id="g1" width="600"><g/></svg>
-              </div>
-              <div class="panel-footer">Panel footer</div>
-            </div>
-
+          <div class="col-md-9"  id="graph-panel">
           </div>
         </div>
       </div>
   </div><!-- /.container -->
 
 
-
- 
-  <script src="https://cdn.rawgit.com/jprichardson/string.js/master/dist/string.min.js"></script>
+<!-- General Libs 
+-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/jprichardson/string.js/master/dist/string.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <script src="libs/dagre/dagre-d3.min.js"></script>
 
   <!-- React 0.14 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
   -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-dom.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.6/react-with-addons.min.js"></script>
 
   <!-- React 0.13 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
@@ -95,8 +84,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser-polyfill.min.js"></script>
   -->
-  <script src="http://d3js.org/d3.v3.js"></script>
-  <script src="libs/dagre/dagre-d3.min.js"></script>
 
   <script src="libs/systemjs/system.js"></script>
   <script>
@@ -111,15 +98,6 @@
     });
     System.import('js/app.js');
   </script>
-
-
-  <!-- 
-  <script type="module" src="js/app.js"></script>
-  <script type="text/babel" src="js/app.js"></script> 
-  -->
-
-
-
 
 
 </body>

@@ -36,7 +36,7 @@ export function linesToGraphObjects(lines) {
 			// Create node
 			var nodeObject = {};
 			var level = S(line).count(indentSymbol);
-			var label = S(line).replaceAll(indentSymbol, "").s;
+			var label = S(line).replaceAll(indentSymbol, "").trim().s;
 
 			nodeObject.type = "node";
 			nodeObject.level = level;

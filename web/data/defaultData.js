@@ -36,13 +36,15 @@ export var text1 =
 
 export var text2 = 
 `WBS
-	AAA
-		BBB
-			CCC
-		DDD
-	EEE
-		FFF
-			GGG
-		HHH
+> AAA
+>> BBB
+> > > CCC
+> > > DDD
+> > > EEE
+>> FFF
+>> GGG
+>HHH
+>> III
+>> JJJ
 
 `;

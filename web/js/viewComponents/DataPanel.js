@@ -1,19 +1,22 @@
 export var DataPanel = React.createClass({
   getInitialState: function() {
-    return {text: ""};
+    return {text: this.props.defValue};
   },
 
   componentDidMount: function() {
       this.setState({text: this.props.defValue});
+      this.props.draw(this.state.text);
   },
 
   handleTextChange: function(e) {
-    this.setState({text: e.target.value});
     console.dir(e.target.value);
+    this.setState({text: e.target.value});
+    this.props.draw(e.target.value);
   },
 
   handleDrawButtonClick: function(e) {
-    console.dir(this.state.text);
+    // console.dir(this.state.text);
+    this.props.draw(this.state.text);
   }, 
 
   render: function() {
