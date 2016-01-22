@@ -8,7 +8,9 @@ div#graph-panel {
   min-height: 600px;
 }
 
-
+#demoCanvas {
+  border: 1px solid #333333;
+}
 
 texarea {
   border:0px;

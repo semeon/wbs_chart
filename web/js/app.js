@@ -3,6 +3,15 @@ import * as textData from "data/defaultData.js";
 import {DataPanel} from "js/viewComponents/DataPanel.js";
 import {GraphPanel} from "js/viewComponents/GraphPanel.js";
 
+import {tutorial} from "js/graph/easelDraw.js";
+import {canv} from "js/graph/canvas/canvasDraw.js";
+
+
+canv();
+
+
+
+/* 
 var defaultData = textData.text2;
 
 var renderGraphPanel = function(text) {
@@ -18,3 +27,4 @@ ReactDOM.render(
 	document.getElementById('data-panel')
 );
 
+*/
