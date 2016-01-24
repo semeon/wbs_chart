@@ -4,11 +4,14 @@ import {RectNode} from "js/graph/canvas/elements/node.js";
 
 export function canv() {
 
-	var drawing = {};
+
+	// Faking data
+	var chartData = {};
+
 
 	var canvas = document.getElementById('demoCanvas');
 	var context = canvas.getContext('2d');
-	context.grid = new Grid(canvas.width, canvas.height);
+	context.grid = new Grid(chartData, canvas.width, canvas.height);
 
 	console.dir("-- GRID --");
 	console.dir("grid.canvasMidX(): " + context.grid.canvasMidX());

@@ -1,26 +1,38 @@
-export function Grid(cWidth, cHeight) {
+export function Grid(chartData, cWidth, cHeight) {
 
 	var grid = this;
-
 	var conf = {};
 
-	conf.canvasMidX = cWidth/2;
+
+	// analyse data to calculate grid
+	// ... chartData 
+	conf.chartWidth = 500;
+
+
+
+	// set grid measurements
+	
 	conf.paddingLeft = 10;
 	conf.paddingRight = conf.paddingLeft;
 	conf.paddingTop = 20;
+	conf.paddingBottom = 20;
+
+	conf.gridWidth = chartData.maxWidth + conf.paddingLeft + conf.paddingRight;
+	conf.gridMidX = conf.gridWidth/2;
+
 
 	conf.levelBar = {};
-	conf.levelBar.height = 20;
-	conf.levelBar.paddingTop = 10;
-	conf.levelBar.paddingBottom = 10;
+		conf.levelBar.height = 20;
+		conf.levelBar.paddingTop = 10;
+		conf.levelBar.paddingBottom = 10;
 
 	conf.levelRow = {};
-	conf.levelRow.height = 80;
-	conf.levelRow.paddingTop = 10;
-	conf.levelRow.paddingBottom = 10;
+		conf.levelRow.height = 80;
+		conf.levelRow.paddingTop = 10;
+		conf.levelRow.paddingBottom = 10;
 
-	this.canvasMidX = function() {
-		return conf.canvasMidX;
+	this.gridMidX = function() {
+		return conf.gridMidX;
 	}
 
 	this.left = function() {
