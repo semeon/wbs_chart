@@ -41,13 +41,8 @@ export function canv(chartData) {
 			cartNode.draw();
 
 			console.dir(cartNode.getTop());
-			console.dir("");
-		
 		}
-		
 	}
-
-
 }
 
 function contextReset(context) {
