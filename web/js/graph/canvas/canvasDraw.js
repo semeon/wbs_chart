@@ -1,4 +1,4 @@
-import {Chart} from "js/graph/canvas/grid.js";
+import {Chart} from "js/graph/canvas/chart.js";
 import {RectNode} from "js/graph/canvas/elements/node.js";
 
 
