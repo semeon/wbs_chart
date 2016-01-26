@@ -45,6 +45,8 @@ export var text2 =
 >> GGG
 >HHH
 >> III
->> JJJ
+>>> JJJ
+>>> KKK
+>> LLL
 
 `;
