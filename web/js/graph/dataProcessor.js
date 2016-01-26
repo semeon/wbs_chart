@@ -20,13 +20,15 @@ export function linesToGraphObjects(lines) {
 
 	console.dir("Adding data items..");
 
-	var resultArray = [];
+	var resultObj = {};
+		resultObj.nodes = {};
+		resultObj.levels = {};
+		resultObj.edges = [];
 	
 	var lastParentIdByLevel = {};
-	lastParentIdByLevel[0] = null;
-	var prevNode = null;
+		lastParentIdByLevel[0] = null;
 
-	var prevNodeLevel = null;
+	var prevNode = null;
 
 
 	for (var i=0; i<lines.length; i++) {
@@ -44,22 +46,33 @@ export function linesToGraphObjects(lines) {
 			nodeObject.label = label;
 			nodeObject.parentId = null;
 
-			if (level == 0 || !prevNode) {
-				nodeObject.parentId = null;
-				lastParentIdByLevel[level] = nodeObject.id;
-			} else {
-				if (prevNode.level < level) {
-					nodeObject.parentId = prevNode.id;
-					lastParentIdByLevel[level-1] = prevNode.id;
-					// lastParentIdByLevel[level] = nodeObject.id; - seems to be uneccessary
+
+			// Define parentId
+				if (level == 0 || !prevNode) {
+					nodeObject.parentId = null;
+					lastParentIdByLevel[level] = nodeObject.id;
 				} else {
-					nodeObject.parentId = lastParentIdByLevel[level-1];
+					if (prevNode.level < level) {
+						nodeObject.parentId = prevNode.id;
+						lastParentIdByLevel[level-1] = prevNode.id;
+						// lastParentIdByLevel[level] = nodeObject.id; - seems to be uneccessary
+					} else {
+						nodeObject.parentId = lastParentIdByLevel[level-1];
+					}
 				}
+
+			// STORED FOR DEBUG PURPOSE ONLY
+			if (nodeObject.parentId) {
+				nodeObject.parentLabel = resultObj.nodes[nodeObject.parentId].label;
+			} else {
+				nodeObject.parentLabel = null;
 			}
 
 			// Save node
 			prevNode = nodeObject;
-			resultArray.push(nodeObject);
+			resultObj.nodes[nodeObject.id] = nodeObject;
+			if (resultObj.levels[level] === undefined) { resultObj.levels[level] = [] }
+			resultObj.levels[level].push(nodeObject);
 
 			// Create and save edge
 			if (nodeObject.parentId && nodeObject.id) {
@@ -67,15 +80,15 @@ export function linesToGraphObjects(lines) {
 				edgeObject.type = "edge";
 				edgeObject.startNodeId = nodeObject.parentId;
 				edgeObject.endNodeId = nodeObject.id;
-				resultArray.push(edgeObject);
+				resultObj.edges.push(edgeObject);
 			}
 		}
 	}
 
-	// console.dir("Result graph Objects:");
-	// console.dir(resultArray);
+	// console.dir("Result graph Object:");
+	// console.dir(resultObj);
 
-	return resultArray;
+	return resultObj;
 }
 
 
