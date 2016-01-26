@@ -1,71 +1,86 @@
-export function Grid(chartData, cWidth, cHeight) {
+export function Chart(chartData, cWidth, cHeight) {
 
 	// PRIVATE 
 	// ----------------------------
 
-		var grid = this;
+		var chart = this;
 		var conf = {};
+		var cWidth = 0;
+		var cHeight = 0;
 
-
-		// analyse data to calculate grid
+		// analyse data to calculate chart
 		// ... chartData 
 		// calculate data-depending dimentions
-		var chartDimentions = calculateDimentions(chartData);
 
-		console.dir(chartDimentions);
+		this.init = function(chartData, width, height) {
+			cWidth = width;
+			cHeight = height;
 
-			conf.chartWidth = chartDimentions.width;
+			// set chart dimentions
+				conf.paddingLeft = 10;
+				conf.paddingRight = conf.paddingLeft;
+				conf.paddingTop = 20;
+				conf.paddingBottom = 20;
+
+				conf.chartWidth = chartData.maxWidth + conf.paddingLeft + conf.paddingRight;
+				conf.chartMidX = conf.chartWidth/2;
+
+				conf.node = {};
+					conf.node.height = 30;
+					conf.node.width = 80;
+					conf.node.spacing = 40;
+					conf.node.padding = {};
+					conf.node.padding.top = 20;
+
+				conf.levelBar = {};
+					conf.levelBar.height = 20;
+					conf.levelBar.paddingTop = 10;
+					conf.levelBar.paddingBottom = 10;
+
+				conf.levelRow = {};
+					conf.levelRow.height = 80;
+					conf.levelRow.paddingTop = 10;
+					conf.levelRow.paddingBottom = 10;
+
+			calculateSubTreeWidth(chartData.tree);
+		}
 
 
-		// set grid dimentions
-			conf.paddingLeft = 10;
-			conf.paddingRight = conf.paddingLeft;
-			conf.paddingTop = 20;
-			conf.paddingBottom = 20;
+		function calculateSubTreeWidth(node) {
 
-			conf.gridWidth = chartData.maxWidth + conf.paddingLeft + conf.paddingRight;
-			conf.gridMidX = conf.gridWidth/2;
-
-			conf.node = {};
-				conf.node.height = 30;
-				conf.node.width = 80;
-				conf.node.spacing = 40;
-				conf.node.padding = {};
-				conf.node.padding.top = 20;
+			var subTreeWidth = 80; //nodewidth placehoder
+			var childrenWidth = 0;
 
 
-			conf.levelBar = {};
-				conf.levelBar.height = 20;
-				conf.levelBar.paddingTop = 10;
-				conf.levelBar.paddingBottom = 10;
+			if (node.children && node.children.length>0) {
 
-			conf.levelRow = {};
-				conf.levelRow.height = 80;
-				conf.levelRow.paddingTop = 10;
-				conf.levelRow.paddingBottom = 10;
+				for(var i=0; i<node.children.length; i++) {
+					var child = node.children[i];
+					childrenWidth = childrenWidth + calculateSubTreeWidth(child);
+				}
 
-
-		function calculateDimentions(chartData) {
-
-			var dimentions = {};
-			dimentions.widestLevel = 0;
-			dimentions.width = 0;
-
-			for (var l in chartData.levels) {
-				var level = chartData.levels[l];
-				var width = chartData.levels[l].length;
-				if (dimentions.width < width ) dimentions.width = width;
+				childrenWidth = childrenWidth + (node.children.length-1)*chart.nodeSpacing();
 			}
 
-			return dimentions;
+			if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
+			if (!node.subTreeWidth) node.subTreeWidth = subTreeWidth;
+
+			console.log("Node: " + node.label + ", subTreeWidth: " + subTreeWidth);
+			if (node.children && node.children.length>0) {
+				for(var i=0; i<node.children.length; i++) {
+					var child = node.children[i];
+					console.log("- Child[" + i + "] aka " + child.label + ", subTreeWidth: " + child.subTreeWidth);
+				}
+			}
+			return subTreeWidth;
 		}
 
 	// PUBLIC
 	// -----------------------
 
-		// Grid
-			this.gridMidX = function() {
-				return conf.gridMidX;
+		// chart
+			this.chartMidX = function() {
+				return conf.chartMidX;
 			}
 
 			this.left = function() {
@@ -102,24 +117,67 @@ export function Grid(chartData, cWidth, cHeight) {
 			}
 
 			this.levelTop = function(level) {
-				return grid.levelHeight() * level + conf.paddingTop;
+				return chart.levelHeight() * level + conf.paddingTop;
 			}
 
 			this.levelBottom = function(level) {
-				return grid.levelTop(level) + grid.levelHeight();
+				return chart.levelTop(level) + chart.levelHeight();
 			}
 
 			this.levelBarBottom = function(level) {
-				return grid.levelTop(level) + conf.levelBar.height;
+				return chart.levelTop(level) + conf.levelBar.height;
 			}
 
 			this.levelRowTop = function(level) {
-				return grid.levelBarBottom(level);
+				return chart.levelBarBottom(level);
 			}
 
 			this.levelRowContentTop = function(level) {
-				return grid.levelTop(level) + conf.levelBar.height + conf.levelRow.paddingTop;
+				return chart.levelTop(level) + conf.levelBar.height + conf.levelRow.paddingTop;
 			}
+
+
+	// Draw grid
+		this.drawGrid = function(context, levNum) {
+			console.dir("-- Draw Grid --");
+
+			for (var i=0; i<levNum; i++) {
+				console.dir("FROM: (" + chart.left() + "," + chart.levelTop(i) + ") TO: (" + chart.right() + "," + chart.levelTop(i) + ")");
+				// console.dir("");
+
+
+				context.beginPath();
+				context.lineWidth = 1;
+				context.setLineDash([]);
+				context.strokeStyle = '#666666';
+
+				context.moveTo(chart.left(), chart.levelTop(i)+0.5);
+				context.lineTo(chart.right(), chart.levelTop(i)+0.5);
+				context.stroke();		
+
+				context.lineWidth = 1;
+				context.setLineDash([10]);
+				context.strokeStyle = '#999999';
+
+				context.beginPath();
+				context.moveTo(chart.left(), chart.levelRowTop(i)+0.5);
+				context.lineTo(chart.right(), chart.levelRowTop(i)+0.5);
+				context.stroke();
+
+				context.restore();	
+			}
+		}
+
+	// Debuglog
+		this.debugLog = function() {
+			console.dir("-- chart SETTINGS --");
+			console.dir("- chart.levelHeight(): " + chart.levelHeight());
+			console.dir("- chart.levelTop(0): " + chart.levelTop(0));
+			console.dir("- chart.levelBottom(0): " + chart.levelBottom(0));
+			console.dir("- chart.levelBarBottom(0): " + chart.levelBarBottom(0));
+			console.dir("- chart.levelRowTop(0): " + chart.levelRowTop(0));
+			console.dir("");	
+		}
 
 
 }

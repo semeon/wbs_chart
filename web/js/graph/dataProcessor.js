@@ -25,6 +25,7 @@ export function linesToGraphObjects(lines) {
 		resultObj.levels = {};
 		resultObj.edges = [];
 		resultObj.tree = {}; // abstract root, not a node
+		resultObj.tree.label = "ROOT"; // not visible to user
 		resultObj.tree.children = [];
 
 	
