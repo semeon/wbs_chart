@@ -24,6 +24,9 @@ export function linesToGraphObjects(lines) {
 		resultObj.nodes = {};
 		resultObj.levels = {};
 		resultObj.edges = [];
+		resultObj.tree = {}; // abstract root, not a node
+		resultObj.tree.children = [];
+
 	
 	var lastParentIdByLevel = {};
 		lastParentIdByLevel[0] = null;
@@ -36,15 +39,15 @@ export function linesToGraphObjects(lines) {
 		if (S(line).length > 0) {
 			
 			// Create node
-			var nodeObject = {};
 			var level = S(line).count(indentSymbol);
 			var label = S(line).replaceAll(indentSymbol, "").trim().s;
-
-			nodeObject.type = "node";
-			nodeObject.level = level;
-			nodeObject.id = "n"+i;
-			nodeObject.label = label;
-			nodeObject.parentId = null;
+			var nodeObject = {};
+				nodeObject.id = "n"+i;
+				nodeObject.type = "node";
+				nodeObject.level = level;
+				nodeObject.label = label;
+				nodeObject.parentId = null;
+				nodeObject.children = [];
 
 
 			// Define parentId
@@ -62,26 +65,40 @@ export function linesToGraphObjects(lines) {
 				}
 
 			// STORED FOR DEBUG PURPOSE ONLY
-			if (nodeObject.parentId) {
-				nodeObject.parentLabel = resultObj.nodes[nodeObject.parentId].label;
-			} else {
-				nodeObject.parentLabel = null;
-			}
+				if (nodeObject.parentId) {
+					nodeObject.parentLabel = resultObj.nodes[nodeObject.parentId].label;
+				} else {
+					nodeObject.parentLabel = null;
+				}
 
 			// Save node
-			prevNode = nodeObject;
-			resultObj.nodes[nodeObject.id] = nodeObject;
-			if (resultObj.levels[level] === undefined) { resultObj.levels[level] = [] }
-			resultObj.levels[level].push(nodeObject);
+				prevNode = nodeObject;
+				// Update node list
+				resultObj.nodes[nodeObject.id] = nodeObject;
+				
+				// Update level list -- Do i need it at all?
+				if (resultObj.levels[level] === undefined) { resultObj.levels[level] = [] }
+				resultObj.levels[level].push(nodeObject);
+
+				// Update tree
+					if (nodeObject.parentId == null ) {
+						// Saving a root node
+						resultObj.tree.children.push(nodeObject);
+					} else {
+						// Saving a child node
+						if (resultObj.nodes[nodeObject.parentId]) {
+							resultObj.nodes[nodeObject.parentId].children.push(nodeObject);
+						} else { console.log("Building tree error!"); }
+					}
 
 			// Create and save edge
-			if (nodeObject.parentId && nodeObject.id) {
-				var edgeObject = {};
-				edgeObject.type = "edge";
-				edgeObject.startNodeId = nodeObject.parentId;
-				edgeObject.endNodeId = nodeObject.id;
-				resultObj.edges.push(edgeObject);
-			}
+				if (nodeObject.parentId && nodeObject.id) {
+					var edgeObject = {};
+					edgeObject.type = "edge";
+					edgeObject.startNodeId = nodeObject.parentId;
+					edgeObject.endNodeId = nodeObject.id;
+					resultObj.edges.push(edgeObject);
+				}
 		}
 	}
 
@@ -90,7 +107,6 @@ export function linesToGraphObjects(lines) {
 
 	return resultObj;
 }
-
 
 
 
