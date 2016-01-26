@@ -1,22 +1,35 @@
 export function RectNode(context, level, number, caption) {
 
-
-
 	var top = context.grid.levelRowContentTop(level);
-	var left = 10;
-	var width = 100;
-	var height = 40;
+	var width = context.grid.nodeWidth();
+	var height = context.grid.nodeHeight();
 
-
-	context.beginPath();
-	context.rect(left+0.5, top+0.5, width, height); 
-	context.fillStyle = '#009900';
-	context.lineWidth = 1;
-	context.strokeStyle = 'black';
+	var left = context.grid.left() + (context.grid.nodeSpacing() + width)*number;
 
 	this.draw = function() {
-		context.stroke();
-		context.fill();
+
+		// Draw RECT
+			context.default();
+
+			context.beginPath();
+			context.rect(left+0.5, top+0.5, width, height); 
+			context.fillStyle = '#009900';
+			context.lineWidth = 1;
+			context.strokeStyle = 'black';
+
+			context.stroke();
+			context.fill();
+
+		// Draw TEXT
+			context.default();
+
+			context.beginPath();
+			context.font = '14px Arial';
+			context.fillStyle = '#333333';
+			context.textAlign = 'center';
+
+			context.fillText(caption, left+width/2, top+context.grid.nodePaddingTop());
+
 	}
 
 	this.getTop = function () {
