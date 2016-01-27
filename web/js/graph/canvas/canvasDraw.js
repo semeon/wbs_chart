@@ -13,8 +13,6 @@ export function createChart(rawData) {
 
 	console.dir(chartData);
 
-	var chart = new Chart();
-	chart.init(chartData);
 
 	var canvas = document.getElementById('demoCanvas');
 	var context = canvas.getContext('2d');
@@ -25,8 +23,11 @@ export function createChart(rawData) {
 							context.font = '14pt Arial';
 						}
 
-	chart.drawGrid(context, 5);
-	chart.drawLevels(context);
+	var chart = new Chart();
+	chart.init(context, chartData);
+
+	chart.drawGrid(5);
+	chart.drawTree();
 
 
 

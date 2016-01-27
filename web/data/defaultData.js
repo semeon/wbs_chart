@@ -43,10 +43,15 @@ export var text2 =
 > > > EEE
 >> FFF
 >> GGG
-HHH
+> HHH
 > III
 >> JJJ
 >> KKK
 > LLL
+`;
 
+export var text3 = 
+`WBS
+> AAA
+> BBB
 `;

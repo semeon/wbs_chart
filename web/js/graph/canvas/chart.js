@@ -8,12 +8,14 @@ export function Chart() {
 		var chart = this;
 		var chartData = {};
 		var conf = {};
+		var context = {};
 
 		// analyse data to calculate chart
 		// ... chartData 
 		// calculate data-depending dimentions
 
-		this.init = function(data) {
+		this.init = function(ctx, data) {
+			context = ctx;
 			chartData = data;
 
 			// set chart dimentions
@@ -22,13 +24,13 @@ export function Chart() {
 				conf.paddingTop = 20;
 				conf.paddingBottom = 20;
 
-				conf.chartWidth = chartData.maxWidth + conf.paddingLeft + conf.paddingRight;
-				conf.chartMidX = conf.chartWidth/2;
+				// conf.chartWidth = chart.maxWidth + conf.paddingLeft + conf.paddingRight;
+				// conf.chartMidX = conf.chartWidth/2;
 
 				conf.node = {};
-					conf.node.height = 30;
-					conf.node.width = 80;
-					conf.node.spacing = 40;
+					conf.node.height = 25;
+					conf.node.width = 50;
+					conf.node.spacing = 20;
 					conf.node.padding = {};
 					conf.node.padding.top = 20;
 
@@ -50,6 +52,7 @@ export function Chart() {
 
 			var subTreeWidth = 80; //nodewidth placehoder
 			var childrenWidth = 0;
+			node.offset = 0;
 
 
 			if (node.children && node.children.length>0) {
@@ -58,12 +61,11 @@ export function Chart() {
 					var child = node.children[i];
 					childrenWidth = childrenWidth + calculateSubTreeWidth(child);
 				}
-
 				childrenWidth = childrenWidth + (node.children.length-1)*chart.nodeSpacing();
 			}
 
 			if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
-			if (!node.subTreeWidth) node.subTreeWidth = subTreeWidth;
+			node.subTreeWidth = subTreeWidth;
 
 			// console.log("Node: " + node.label + ", subTreeWidth: " + subTreeWidth);
 			if (node.children && node.children.length>0) {
@@ -73,6 +75,35 @@ export function Chart() {
 				}
 			}
 			return subTreeWidth;
+		}
+
+		function DrawChildren (node, offset) {
+			if (node.children && node.children.length>0) {
+
+				var rowOffset = 0;
+
+				for(var i=0; i<node.children.length; i++) {
+					var child = node.children[i];
+
+					console.dir("Preparing node[" + i + "]: " + child.label);
+					console.dir("offset: " + offset);
+					console.dir("rowOffset: " + rowOffset);
+
+					if (i > 0) {
+						rowOffset = rowOffset + node.children[i-1].subTreeWidth + chart.nodeSpacing();
+					}
+					console.dir("rowOffset+: " + rowOffset);
+
+					DrawChildren(child, offset + rowOffset);
+
+					var chartNode = new RectNode(chart, child);
+					chartNode.draw(context, offset + rowOffset);
+//					rowOffset = rowOffset + chart.nodeWidth() + chart.nodeSpacing();
+				}
+				
+				offset = offset + node.subTreeWidth + chart.nodeSpacing();
+
+			}
 		}
 
 	// PUBLIC
@@ -88,17 +119,17 @@ export function Chart() {
 
 					for (var i=0; i<nodes.length; i++) {
 						var node = nodes[i];
-
-						var nodeSpace = node.subTreeWidth;
 						var chartNode = new RectNode(chart, node);
 						chartNode.draw(context, offset);
 
 						console.dir(chartNode.getTop());
 						offset = offset + node.subTreeWidth + chart.nodeSpacing();
-
-
 					}
 				}				
+			}
+
+			this.drawTree = function() {
+				DrawChildren(chartData.tree, chart.left());
 			}
 
 
@@ -168,7 +199,7 @@ export function Chart() {
 
 
 	// Draw grid
-		this.drawGrid = function(context, levNum) {
+		this.drawGrid = function(levNum) {
 			console.dir("-- Draw Grid --");
 
 			for (var i=0; i<levNum; i++) {
