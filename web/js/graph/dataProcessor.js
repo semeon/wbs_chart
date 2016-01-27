@@ -25,8 +25,8 @@ export function linesToGraphObjects(lines) {
 		resultObj.levels = {};
 		resultObj.edges = [];
 		resultObj.tree = {}; // abstract root, not a node
-		resultObj.tree.label = "ROOT"; // not visible to user
-		resultObj.tree.children = [];
+			resultObj.tree.label = "ROOT"; // not visible to user
+			resultObj.tree.children = [];
 
 	
 	var lastParentIdByLevel = {};
@@ -102,9 +102,6 @@ export function linesToGraphObjects(lines) {
 				}
 		}
 	}
-
-	// console.dir("Result graph Object:");
-	// console.dir(resultObj);
 
 	return resultObj;
 }

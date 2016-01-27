@@ -1,20 +1,20 @@
-export function Chart(chartData, cWidth, cHeight) {
+import {RectNode} from "js/graph/canvas/elements/node.js";
+
+export function Chart() {
 
 	// PRIVATE 
 	// ----------------------------
 
 		var chart = this;
+		var chartData = {};
 		var conf = {};
-		var cWidth = 0;
-		var cHeight = 0;
 
 		// analyse data to calculate chart
 		// ... chartData 
 		// calculate data-depending dimentions
 
-		this.init = function(chartData, width, height) {
-			cWidth = width;
-			cHeight = height;
+		this.init = function(data) {
+			chartData = data;
 
 			// set chart dimentions
 				conf.paddingLeft = 10;
@@ -78,7 +78,36 @@ export function Chart(chartData, cWidth, cHeight) {
 	// PUBLIC
 	// -----------------------
 
+		// Drawing
+			this.drawLevels = function(context) {
+				console.dir("-- Draw Nodes --");
+				for (var l in chartData.levels) {
+
+					var nodes = chartData.levels[l];
+
+					for (var i=0; i<nodes.length; i++) {
+						var node = nodes[i];
+
+						var nodeSpace = node.subTreeWidth;
+
+
+
+						var chartNode = new RectNode(context, chart, l, i, node.label);
+						chartNode.draw();
+
+						console.dir(chartNode.getTop());
+					}
+				}				
+			}
+
+
+
 		// chart
+
+			this.width = function() {
+				return chartData.tree.subTreeWidth;
+			}
+
 			this.chartMidX = function() {
 				return conf.chartMidX;
 			}
@@ -87,11 +116,11 @@ export function Chart(chartData, cWidth, cHeight) {
 				return conf.paddingLeft;
 			}
 			this.right = function() {
-				return cWidth - conf.paddingRight;
+				return chart.width() - conf.paddingRight;
 			}
 			
 			this.top = function() {
-				return conf.paddingTop;
+				return chart.width + conf.paddingTop;
 			}
 
 		// Node 
