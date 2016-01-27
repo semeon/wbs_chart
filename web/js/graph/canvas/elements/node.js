@@ -1,12 +1,13 @@
-export function RectNode(context, chart, level, number, caption) {
+export function RectNode(chart, node) {
 
-	var top = chart.levelRowContentTop(level);
-	var width = chart.nodeWidth();
+	var top = chart.levelRowContentTop(node.level);
 	var height = chart.nodeHeight();
+	var width = node.subTreeWidth;
+	var left = 0;
 
-	var left = chart.left() + (chart.nodeSpacing() + width)*number;
+	this.draw = function(context, offset) {
 
-	this.draw = function() {
+		left = offset;
 
 		// Draw RECT
 			context.default();
@@ -28,7 +29,7 @@ export function RectNode(context, chart, level, number, caption) {
 			context.fillStyle = '#333333';
 			context.textAlign = 'center';
 
-			context.fillText(caption, left+width/2, top+chart.nodePaddingTop());
+			context.fillText(node.label, left+width/2, top+chart.nodePaddingTop());
 
 	}
 

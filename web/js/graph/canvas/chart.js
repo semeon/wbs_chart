@@ -65,11 +65,11 @@ export function Chart() {
 			if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
 			if (!node.subTreeWidth) node.subTreeWidth = subTreeWidth;
 
-			console.log("Node: " + node.label + ", subTreeWidth: " + subTreeWidth);
+			// console.log("Node: " + node.label + ", subTreeWidth: " + subTreeWidth);
 			if (node.children && node.children.length>0) {
 				for(var i=0; i<node.children.length; i++) {
 					var child = node.children[i];
-					console.log("- Child[" + i + "] aka " + child.label + ", subTreeWidth: " + child.subTreeWidth);
+					// console.log("- Child[" + i + "] aka " + child.label + ", subTreeWidth: " + child.subTreeWidth);
 				}
 			}
 			return subTreeWidth;
@@ -84,18 +84,19 @@ export function Chart() {
 				for (var l in chartData.levels) {
 
 					var nodes = chartData.levels[l];
+					var offset = chart.left();
 
 					for (var i=0; i<nodes.length; i++) {
 						var node = nodes[i];
 
 						var nodeSpace = node.subTreeWidth;
-
-
-
-						var chartNode = new RectNode(context, chart, l, i, node.label);
-						chartNode.draw();
+						var chartNode = new RectNode(chart, node);
+						chartNode.draw(context, offset);
 
 						console.dir(chartNode.getTop());
+						offset = offset + node.subTreeWidth + chart.nodeSpacing();
+
+
 					}
 				}				
 			}
