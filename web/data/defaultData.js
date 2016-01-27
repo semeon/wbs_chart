@@ -43,7 +43,7 @@ export var text2 =
 > > > EEE
 >> FFF
 >> GGG
-> HHH
+HHH
 > III
 >> JJJ
 >> KKK

@@ -40,98 +40,55 @@ export function Chart() {
 					conf.levelBar.paddingBottom = 10;
 
 				conf.levelRow = {};
-					conf.levelRow.height = 80;
+					conf.levelRow.height = 60;
 					conf.levelRow.paddingTop = 10;
 					conf.levelRow.paddingBottom = 10;
 
-			calculateSubTreeWidth(chartData.tree);
+			calculateSubTree(chartData.tree, chart.left());
 		}
 
 
-		function calculateSubTreeWidth(node) {
-
+		function calculateSubTree(node, offset) {
+			node.offset = offset;
 			var subTreeWidth = 80; //nodewidth placehoder
 			var childrenWidth = 0;
-			node.offset = 0;
-
+			var rowOffset = 0;
 
 			if (node.children && node.children.length>0) {
-
 				for(var i=0; i<node.children.length; i++) {
 					var child = node.children[i];
-					childrenWidth = childrenWidth + calculateSubTreeWidth(child);
+					if (i > 0)	rowOffset = rowOffset + node.children[i-1].subTreeWidth + chart.nodeSpacing();
+					childrenWidth = childrenWidth + calculateSubTree(child, offset + rowOffset);
+					if (i > 0)	childrenWidth = childrenWidth + chart.nodeSpacing();
 				}
-				childrenWidth = childrenWidth + (node.children.length-1)*chart.nodeSpacing();
 			}
 
 			if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
 			node.subTreeWidth = subTreeWidth;
 
-			// console.log("Node: " + node.label + ", subTreeWidth: " + subTreeWidth);
-			if (node.children && node.children.length>0) {
-				for(var i=0; i<node.children.length; i++) {
-					var child = node.children[i];
-					// console.log("- Child[" + i + "] aka " + child.label + ", subTreeWidth: " + child.subTreeWidth);
-				}
-			}
 			return subTreeWidth;
 		}
 
-		function DrawChildren (node, offset) {
-			if (node.children && node.children.length>0) {
 
-				var rowOffset = 0;
-
-				for(var i=0; i<node.children.length; i++) {
-					var child = node.children[i];
-
-					console.dir("Preparing node[" + i + "]: " + child.label);
-					console.dir("offset: " + offset);
-					console.dir("rowOffset: " + rowOffset);
-
-					if (i > 0) {
-						rowOffset = rowOffset + node.children[i-1].subTreeWidth + chart.nodeSpacing();
-					}
-					console.dir("rowOffset+: " + rowOffset);
-
-					DrawChildren(child, offset + rowOffset);
-
-					var chartNode = new RectNode(chart, child);
-					chartNode.draw(context, offset + rowOffset);
-//					rowOffset = rowOffset + chart.nodeWidth() + chart.nodeSpacing();
-				}
-				
-				offset = offset + node.subTreeWidth + chart.nodeSpacing();
-
-			}
-		}
 
 	// PUBLIC
 	// -----------------------
 
 		// Drawing
-			this.drawLevels = function(context) {
-				console.dir("-- Draw Nodes --");
-				for (var l in chartData.levels) {
-
-					var nodes = chartData.levels[l];
-					var offset = chart.left();
-
-					for (var i=0; i<nodes.length; i++) {
-						var node = nodes[i];
-						var chartNode = new RectNode(chart, node);
-						chartNode.draw(context, offset);
-
-						console.dir(chartNode.getTop());
-						offset = offset + node.subTreeWidth + chart.nodeSpacing();
-					}
-				}				
-			}
-
 			this.drawTree = function() {
-				DrawChildren(chartData.tree, chart.left());
+				DrawChildren(chartData.tree);
 			}
 
+			this.drawNodes = function() {
+				for (var id in chartData.nodes) {
+					var node = chartData.nodes[id];
+					var chartNode = new RectNode(chart, node, context);
+					if (node.level>0) chartNode.drawParentConnector();
+					chartNode.drawBox();
+					chartNode.drawText();
+					if (node.children.length>0) chartNode.drawChildrenBar();
+				}
+			}
 
 
 		// chart
@@ -174,7 +131,7 @@ export function Chart() {
 
 		// Level
 			this.levelHeight = function() {
-				return conf.levelBar.height + conf.levelRow.height;
+				return conf.levelRow.height;
 			}
 
 			this.levelTop = function(level) {

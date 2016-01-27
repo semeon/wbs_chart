@@ -26,8 +26,8 @@ export function createChart(rawData) {
 	var chart = new Chart();
 	chart.init(context, chartData);
 
-	chart.drawGrid(5);
-	chart.drawTree();
+	// chart.drawGrid(5);
+	chart.drawNodes();
 
 
 
