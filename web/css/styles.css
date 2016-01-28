@@ -2,6 +2,29 @@ body {
   margin-top: 60px;
 }
 
+.navbar-inverse {
+  background-color: #1976D2;
+}
+
+
+.navbar-inverse .navbar-brand {
+  color: #FFFFFF;
+}
+
+
+.navbar-inverse .navbar-nav>.active>a, 
+.navbar-inverse .navbar-nav>.active>a:focus, 
+.navbar-inverse .navbar-nav>.active>a:hover {
+    background-color: #D1C4E9;
+    color: #512DA8;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+  color: #D1C4E9;
+}
+
+
+
 
 div#graph-panel {
   border: 0px solid #999;
@@ -9,7 +32,8 @@ div#graph-panel {
 }
 
 #demoCanvas {
-  border: 1px solid #333333;
+  border: 0px solid #333333;
+  /* background-color: #D1C4E9; */
 }
 
 texarea {
@@ -17,44 +41,5 @@ texarea {
 }
 
 
-
-
-svg {
-  border: 0px solid #999;
-  overflow: hidden;
-}
-
-.node {
-  white-space: nowrap;
-}
-
-.node rect,
-.node circle,
-.node ellipse {
-  stroke: #333;
-  fill: #fff;
-  stroke-width: 1px;
-}
-
-
-.node rect {
-	rx: 5px;
-	ry: 5px;
-},
-
-
-
-.cluster rect {
-  stroke: #333;
-  fill: #000;
-  fill-opacity: 0.1;
-  stroke-width: 1.5px;
-}
-
-.edgePath path.path {
-  stroke: #333;
-  stroke-width: 1px;
-  fill: none;
-}
 
 

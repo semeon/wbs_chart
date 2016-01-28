@@ -34,11 +34,6 @@ export function Chart() {
 					conf.node.padding = {};
 					conf.node.padding.top = 20;
 
-				conf.levelBar = {};
-					conf.levelBar.height = 20;
-					conf.levelBar.paddingTop = 10;
-					conf.levelBar.paddingBottom = 10;
-
 				conf.levelRow = {};
 					conf.levelRow.height = 60;
 					conf.levelRow.paddingTop = 10;
@@ -83,10 +78,11 @@ export function Chart() {
 				for (var id in chartData.nodes) {
 					var node = chartData.nodes[id];
 					var chartNode = new RectNode(chart, node, context);
-					if (node.level>0) chartNode.drawParentConnector();
 					chartNode.drawBox();
 					chartNode.drawText();
-					if (node.children.length>0) chartNode.drawChildrenBar();
+					if (node.level>0) chartNode.drawParentConnector(); 
+					if (node.children.length>1) chartNode.drawChildrenBar();
+					if (node.children.length>0) chartNode.drawChildrenConnector();
 				}
 			}
 
@@ -142,17 +138,7 @@ export function Chart() {
 				return chart.levelTop(level) + chart.levelHeight();
 			}
 
-			this.levelBarBottom = function(level) {
-				return chart.levelTop(level) + conf.levelBar.height;
-			}
 
-			this.levelRowTop = function(level) {
-				return chart.levelBarBottom(level);
-			}
-
-			this.levelRowContentTop = function(level) {
-				return chart.levelTop(level) + conf.levelBar.height + conf.levelRow.paddingTop;
-			}
 
 
 	// Draw grid
@@ -178,8 +164,8 @@ export function Chart() {
 				context.strokeStyle = '#999999';
 
 				context.beginPath();
-				context.moveTo(chart.left(), chart.levelRowTop(i)+0.5);
-				context.lineTo(chart.right(), chart.levelRowTop(i)+0.5);
+				context.moveTo(chart.left(), chart.levelTop(i)+0.5);
+				context.lineTo(chart.right(), chart.levelTop(i)+0.5);
 				context.stroke();
 
 				context.restore();	
@@ -192,8 +178,6 @@ export function Chart() {
 			console.dir("- chart.levelHeight(): " + chart.levelHeight());
 			console.dir("- chart.levelTop(0): " + chart.levelTop(0));
 			console.dir("- chart.levelBottom(0): " + chart.levelBottom(0));
-			console.dir("- chart.levelBarBottom(0): " + chart.levelBarBottom(0));
-			console.dir("- chart.levelRowTop(0): " + chart.levelRowTop(0));
 			console.dir("");	
 		}
 
