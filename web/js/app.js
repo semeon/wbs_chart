@@ -4,10 +4,10 @@
 // import {tutorial} from "js/graph/easelDraw.js";
 
 import * as textData from "data/defaultData.js";
-import {createChart} from "js/graph/canvas/canvasDraw.js";
+import {createChart} from "js/drawing/drawingController.js";
 
 
-var defaultData = textData.text2;
+var defaultData = textData.text4;
 
 createChart(defaultData);
 

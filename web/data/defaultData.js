@@ -55,3 +55,18 @@ export var text3 =
 > AAA
 > BBB
 `;
+
+export var text4 = 
+`App
+> Data
+> View
+> Controller
+> Drawing
+>> Model
+>> View
+>>> Chart
+>>> Node
+>> Controller
+`;
+
+

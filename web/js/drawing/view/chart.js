@@ -1,4 +1,4 @@
-import {RectNode} from "js/graph/canvas/elements/node.js";
+import {RectNode} from "js/drawing/view/node.js";
 
 export function Chart() {
 
@@ -29,10 +29,10 @@ export function Chart() {
 
 				conf.node = {};
 					conf.node.height = 25;
-					conf.node.width = 50;
-					conf.node.spacing = 20;
+					conf.node.width = 70;
+					conf.node.spacing = 10;
 					conf.node.padding = {};
-					conf.node.padding.top = 20;
+					conf.node.padding.top = 17;
 
 				conf.levelRow = {};
 					conf.levelRow.height = 60;

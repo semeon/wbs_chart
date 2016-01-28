@@ -1,5 +1,5 @@
-import * as dataParser from "js/graph/dataProcessor.js";
-import {Chart} from "js/graph/canvas/chart.js";
+import * as dataParser from "js/drawing/model/dataProcessor.js";
+import {Chart} from "js/drawing/view/chart.js";
 
 
 
