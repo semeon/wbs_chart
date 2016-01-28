@@ -6,11 +6,9 @@ body {
   background-color: #1976D2;
 }
 
-
 .navbar-inverse .navbar-brand {
   color: #FFFFFF;
 }
-
 
 .navbar-inverse .navbar-nav>.active>a, 
 .navbar-inverse .navbar-nav>.active>a:focus, 
@@ -24,21 +22,13 @@ body {
 }
 
 
-
-
-div#graph-panel {
-  border: 0px solid #999;
+div#graph-panel div.panel-body {
   min-height: 600px;
+  text-align: center;
+  position: relative;
+  overflow: auto;
 }
 
-#demoCanvas {
-  border: 0px solid #333333;
-  /* background-color: #D1C4E9; */
-}
-
-texarea {
-  border:0px;
-}
 
 
 

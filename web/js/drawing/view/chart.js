@@ -8,14 +8,12 @@ export function Chart() {
 		var chart = this;
 		var chartData = {};
 		var conf = {};
-		var context = {};
 
 		// analyse data to calculate chart
 		// ... chartData 
 		// calculate data-depending dimentions
 
-		this.init = function(ctx, data) {
-			context = ctx;
+		this.init = function(data) {
 			chartData = data;
 
 			// set chart dimentions
@@ -70,11 +68,7 @@ export function Chart() {
 	// -----------------------
 
 		// Drawing
-			this.drawTree = function() {
-				DrawChildren(chartData.tree);
-			}
-
-			this.drawNodes = function() {
+			this.drawNodes = function(context) {
 				for (var id in chartData.nodes) {
 					var node = chartData.nodes[id];
 					var chartNode = new RectNode(chart, node, context);
@@ -89,8 +83,8 @@ export function Chart() {
 
 		// chart
 
-			this.width = function() {
-				return chartData.tree.subTreeWidth;
+			this.getWidth = function() {
+				return chartData.tree.subTreeWidth + chart.nodeSpacing() + conf.paddingRight;
 			}
 
 			this.chartMidX = function() {
@@ -138,39 +132,6 @@ export function Chart() {
 				return chart.levelTop(level) + chart.levelHeight();
 			}
 
-
-
-
-	// Draw grid
-		this.drawGrid = function(levNum) {
-			console.dir("-- Draw Grid --");
-
-			for (var i=0; i<levNum; i++) {
-				console.dir("FROM: (" + chart.left() + "," + chart.levelTop(i) + ") TO: (" + chart.right() + "," + chart.levelTop(i) + ")");
-				// console.dir("");
-
-
-				context.beginPath();
-				context.lineWidth = 1;
-				context.setLineDash([]);
-				context.strokeStyle = '#666666';
-
-				context.moveTo(chart.left(), chart.levelTop(i)+0.5);
-				context.lineTo(chart.right(), chart.levelTop(i)+0.5);
-				context.stroke();		
-
-				context.lineWidth = 1;
-				context.setLineDash([10]);
-				context.strokeStyle = '#999999';
-
-				context.beginPath();
-				context.moveTo(chart.left(), chart.levelTop(i)+0.5);
-				context.lineTo(chart.right(), chart.levelTop(i)+0.5);
-				context.stroke();
-
-				context.restore();	
-			}
-		}
 
 	// Debuglog
 		this.debugLog = function() {

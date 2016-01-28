@@ -1,47 +1,43 @@
-import * as dataParser from "js/drawing/model/dataProcessor.js";
 import {Chart} from "js/drawing/view/chart.js";
 
 
 
-export function createChart(rawData) {
+export function Drawing(m) {
 
+	var textLines = [];
+	var chartData = {};
+	var canvas = {};
+	var context = {};
+	var chart = {};
+	var model = m;
 
-	console.dir("- S T A R T -");
+	chart = new Chart();
 
-	var textLines = dataParser.textToLines(rawData);
-	var chartData = dataParser.linesToGraphObjects(textLines);
+	this.resetCanvas = function(nodeId) {
+		
+		canvas = document.getElementById(nodeId);
+		context = canvas.getContext('2d');
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		context.default = 	function() {
+								context.lineWidth = 1;
+								context.setLineDash([]);
+								context.strokeStyle = '#000000';
+								context.font = '14pt Arial';
+							}
 
-	console.dir(chartData);
+	}
 
+	this.resetChart = function(rawData) {
+		model.reset(rawData);
+		chartData = model.getData();
+		chart.init(chartData);
+	}
 
-	var canvas = document.getElementById('demoCanvas');
-	var context = canvas.getContext('2d');
-	context.default = 	function() {
-							context.lineWidth = 1;
-							context.setLineDash([]);
-							context.strokeStyle = '#000000';
-							context.font = '14pt Arial';
-						}
+	this.drawChart = function() {
+		chart.drawNodes(context);
+	}
 
-	var chart = new Chart();
-	chart.init(context, chartData);
-
-	// chart.drawGrid(5);
-	chart.drawNodes();
-
-
-
-	// console.dir("-- Draw Nodes --");
-	// for (var l in chartData.levels) {
-
-	// 	var nodes = chartData.levels[l];
-
-	// 	for (var i=0; i<nodes.length; i++) {
-	// 		var node = nodes[i];
-	// 		var cartNode = new RectNode(context, chart, l, i, node.label);
-	// 		cartNode.draw();
-
-	// 		console.dir(cartNode.getTop());
-	// 	}
-	// }
+	this.getChartWidth = function() {
+		return chart.getWidth();
+	}
 }
