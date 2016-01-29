@@ -8,6 +8,7 @@ export function Chart() {
 		var chart = this;
 		var chartData = {};
 		var conf = {};
+		var context = {};
 
 		// analyse data to calculate chart
 		// ... chartData 
@@ -59,6 +60,9 @@ export function Chart() {
 			if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
 			node.subTreeWidth = subTreeWidth;
 
+			// Create node.view objects
+			node.view = new RectNode(chart, node);
+
 			return subTreeWidth;
 		}
 
@@ -71,12 +75,12 @@ export function Chart() {
 			this.drawNodes = function(context) {
 				for (var id in chartData.nodes) {
 					var node = chartData.nodes[id];
-					var chartNode = new RectNode(chart, node, context);
-					chartNode.drawBox();
-					chartNode.drawText();
-					if (node.level>0) chartNode.drawParentConnector(); 
-					if (node.children.length>1) chartNode.drawChildrenBar();
-					if (node.children.length>0) chartNode.drawChildrenConnector();
+					// var chartNode = new RectNode(chart, node, context);
+					node.view.drawBox(context);
+					node.view.drawText(context);
+					if (node.level>0) node.view.drawParentConnector(context); 
+					if (node.children.length>1) node.view.drawChildrenBar(context);
+					if (node.children.length>0) node.view.drawChildrenConnector(context);
 				}
 			}
 

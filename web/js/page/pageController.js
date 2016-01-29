@@ -5,7 +5,6 @@ export function Page(drawingController) {
 
 	var drawing = drawingController;
 
-	
 
 	this.render = function(defaultData) {
 
