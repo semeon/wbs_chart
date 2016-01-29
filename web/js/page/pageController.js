@@ -4,7 +4,7 @@ import {GraphPanel} from "js/page/components/GraphPanel.js";
 export function Page(drawingController) {
 
 	var drawing = drawingController;
-
+	drawing.init('chartCanvas');
 
 	this.render = function(defaultData) {
 

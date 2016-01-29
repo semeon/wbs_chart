@@ -16,7 +16,7 @@ export function Drawing(m) {
 
 
 
-	function calculateSubTree(node, offset) {
+	function BuildTreeView(node, offset) {
 		node.offset = offset;
 		var subTreeWidth = 80; //nodewidth placehoder
 		var childrenWidth = 0;
@@ -26,13 +26,14 @@ export function Drawing(m) {
 			for(var i=0; i<node.children.length; i++) {
 				var child = node.children[i];
 				if (i > 0)	rowOffset = rowOffset + node.children[i-1].subTreeWidth + chartView.nodeSpacing();
-				calculateSubTree(child, offset + rowOffset);
+				BuildTreeView(child, offset + rowOffset);
 				childrenWidth = childrenWidth + child.subTreeWidth;
 				if (i > 0)	childrenWidth = childrenWidth + chartView.nodeSpacing();
 			}
 		}
 
 		if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
+
 		node.subTreeWidth = subTreeWidth;
 
 		// Create node.view objects
@@ -44,12 +45,9 @@ export function Drawing(m) {
 
 
 	// Public
-
 	this.init = function(nodeId) {
-		console.dir("Init Drawing");
 		canvasNodeId = nodeId;
 		chartView.init();
-		console.dir("End Init Drawing");
 	}
 
 	this.getCanvasNodeId = function() {
@@ -57,9 +55,6 @@ export function Drawing(m) {
 	}
 
 	this.resetCanvas = function() {
-		console.dir("resetCanvas");
-		console.dir("canvasNodeId: " + canvasNodeId);
-
 		canvas = document.getElementById(canvasNodeId);
 		context = canvas.getContext('2d');
 
@@ -71,12 +66,11 @@ export function Drawing(m) {
 								context.font = '14pt Arial';
 							}
 
-		console.dir("end resetCanvas");
 	}
 
 	this.resetChartModel = function(rawData) {
 		model.reset(rawData);
-		calculateSubTree(model.getNodeTree(), chartView.getPaddingLeft());
+		BuildTreeView(model.getNodeTree(), chartView.getPaddingLeft());
 	}
 
 	this.drawChart = function() {

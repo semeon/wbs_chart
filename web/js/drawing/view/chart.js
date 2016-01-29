@@ -64,10 +64,6 @@ export function Chart() {
 			this.levelBottom = function(level) {
 				return chart.levelTop(level) + chart.levelHeight();
 			}
-
-
-
-
 }
 
 

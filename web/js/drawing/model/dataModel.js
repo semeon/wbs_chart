@@ -36,8 +36,6 @@ function DataModel() {
 
 	// PRIVATE
 	function textToLines(rawText) {
-		console.log("reading text..");
-
 		var processedText = rawText;
 		processedText = S(processedText).replaceAll('\t', indentSymbol).s;
 		processedText = S(processedText).replaceAll('>', indentSymbol).s;
