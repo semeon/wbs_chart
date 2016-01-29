@@ -25,11 +25,17 @@ function DataModel() {
 		return processedData;
 	}
 
+	this.getNodeList = function() {
+		return processedData.nodes;
+	}
+
+	this.getNodeTree = function() {
+		return processedData.tree;
+	}
+
 
 	// PRIVATE
 	function textToLines(rawText) {
-		console.log("reading text..");
-
 		var processedText = rawText;
 		processedText = S(processedText).replaceAll('\t', indentSymbol).s;
 		processedText = S(processedText).replaceAll('>', indentSymbol).s;

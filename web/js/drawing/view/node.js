@@ -1,4 +1,4 @@
-export function RectNode(chart, node, context) {
+export function RectNode(chart, node) {
 
 	var top = chart.levelTop(node.level);
 	var height = chart.nodeHeight();
@@ -18,7 +18,7 @@ export function RectNode(chart, node, context) {
 	var connColour  = '#727272';
 	var labelFont = '12px Arial';
 
-	this.long = function(context) {
+	this.log = function(context) {
 
 		console.dir("- Node: " + node.label);
 		console.dir("-- offset: " + offset);
@@ -29,7 +29,7 @@ export function RectNode(chart, node, context) {
 		console.dir("-- left: " + left);
 	}
 
-	this.drawBox = function() {
+	this.drawBox = function(context) {
 
 		// Draw RECT
 		context.default();
@@ -42,7 +42,7 @@ export function RectNode(chart, node, context) {
 		context.fill();
 	}
 
-	this.drawText = function() {
+	this.drawText = function(context) {
 
 		// Draw TEXT
 		context.default();
@@ -54,7 +54,7 @@ export function RectNode(chart, node, context) {
 		context.fillText(node.label, left+width/2, top+chart.nodePaddingTop());
 	}
 
-	this.drawParentConnector = function() {
+	this.drawParentConnector = function(context) {
 		context.default();
 		context.beginPath();
 		context.moveTo(middle+0.5, top+0.5);
@@ -63,7 +63,7 @@ export function RectNode(chart, node, context) {
 		context.stroke();
 	}
 
-	this.drawChildrenBar = function() {
+	this.drawChildrenBar = function(context) {
 		// Draw horizontal bar
 		var firstChild = node.children[0];
 		var lastChild = node.children[node.children.length-1];
@@ -80,7 +80,7 @@ export function RectNode(chart, node, context) {
 
 	}
 
-	this.drawChildrenConnector = function() {
+	this.drawChildrenConnector = function(context) {
 		// Draw connector to the horizontal bar
 		context.default();
 		context.beginPath();
