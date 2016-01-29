@@ -6,7 +6,7 @@ export var GraphPanel = React.createClass({
     // console.dir(this.props.graphBuilder.getChartWidth());
 
     return {text:   this.props.graphData, 
-            width:  this.props.graphBuilder.getChartWidth(),
+            width:  this.props.graphBuilder.getCanvasWidth(),
             canvasNodeId: this.props.graphBuilder.getCanvasNodeId()
             };
   },

@@ -1,24 +1,54 @@
 import {Chart} from "js/drawing/view/chart.js";
-
-
+import {RectNode} from "js/drawing/view/node.js";
 
 export function Drawing(m) {
 
 	var self = this;
 
 	var textLines = [];
-	var chartData = {};
 	var canvas = {};
 	var context = {};
-	var chart = {};
+	var chartView = {};
 	var model = m;
 	var canvasNodeId = "";
 
-	chart = new Chart();
+	chartView = new Chart();
+
+
+
+	function calculateSubTree(node, offset) {
+		node.offset = offset;
+		var subTreeWidth = 80; //nodewidth placehoder
+		var childrenWidth = 0;
+		var rowOffset = 0;
+
+		if (node.children && node.children.length>0) {
+			for(var i=0; i<node.children.length; i++) {
+				var child = node.children[i];
+				if (i > 0)	rowOffset = rowOffset + node.children[i-1].subTreeWidth + chartView.nodeSpacing();
+				calculateSubTree(child, offset + rowOffset);
+				childrenWidth = childrenWidth + child.subTreeWidth;
+				if (i > 0)	childrenWidth = childrenWidth + chartView.nodeSpacing();
+			}
+		}
+
+		if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
+		node.subTreeWidth = subTreeWidth;
+
+		// Create node.view objects
+		node.view = new RectNode(chartView, node);
+
+		return subTreeWidth;
+	}
+
+
+
+	// Public
 
 	this.init = function(nodeId) {
 		console.dir("Init Drawing");
 		canvasNodeId = nodeId;
+		chartView.init();
 		console.dir("End Init Drawing");
 	}
 
@@ -42,21 +72,27 @@ export function Drawing(m) {
 							}
 
 		console.dir("end resetCanvas");
-
 	}
 
 	this.resetChartModel = function(rawData) {
-		console.dir("resetChart");
 		model.reset(rawData);
-		chartData = model.getData();
-		chart.init(chartData);
+		calculateSubTree(model.getNodeTree(), chartView.getPaddingLeft());
 	}
 
 	this.drawChart = function() {
-		chart.drawNodes(context);
+		var nodes = model.getNodeList();
+
+		for (var id in nodes) {
+			var node = nodes[id];
+			node.view.drawBox(context);
+			node.view.drawText(context);
+			if (node.level>0) node.view.drawParentConnector(context); 
+			if (node.children.length>1) node.view.drawChildrenBar(context);
+			if (node.children.length>0) node.view.drawChildrenConnector(context);
+		}
 	}
 
-	this.getChartWidth = function() {
-		return chart.getWidth();
+	this.getCanvasWidth = function() {
+		return model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
 	}
 }

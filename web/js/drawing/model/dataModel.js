@@ -25,6 +25,14 @@ function DataModel() {
 		return processedData;
 	}
 
+	this.getNodeList = function() {
+		return processedData.nodes;
+	}
+
+	this.getNodeTree = function() {
+		return processedData.tree;
+	}
+
 
 	// PRIVATE
 	function textToLines(rawText) {
