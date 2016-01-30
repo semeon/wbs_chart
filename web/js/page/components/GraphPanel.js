@@ -1,14 +1,16 @@
 export var GraphPanel = React.createClass({
+
   getInitialState: function() {
-    this.props.graphBuilder.resetChartModel(this.props.graphData);
-    return {text:   this.props.graphData, 
-            canvasNodeId: this.props.graphBuilder.getCanvasNodeId()
+    return {text:   this.props.graphData,
+            width:  this.props.graphBuilder.getCanvasWidth()
             };
   },
 
   componentDidMount: function() {
-  	console.dir("ComponentDidMount");
-    this.props.graphBuilder.resetCanvas(this.state.canvasNodeId);
+    console.dir("ComponentDidMount: " + this.props.graphBuilder.getCanvasWidth());
+    this.props.graphBuilder.resetChartModel(this.props.graphData);
+    this.props.graphBuilder.resetCanvas();
+    this.props.graphBuilder.resetChartView();
     this.props.graphBuilder.drawChart();
   },
 
@@ -19,7 +21,7 @@ export var GraphPanel = React.createClass({
           <h3 className="panel-title">Graph</h3>
         </div>
         <div className="panel-body">
-		      <canvas id={this.state.canvasNodeId} width={this.props.graphBuilder.getCanvasWidth()} height="600"></canvas>
+		      <canvas id={this.props.graphBuilder.getCanvasNodeId()} width={this.state.width} height="600"></canvas>
         </div>
         <div className="panel-footer">Awesome?</div>
       </div>

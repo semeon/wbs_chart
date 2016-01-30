@@ -10,13 +10,7 @@ export function Chart() {
 			conf.paddingRight = conf.paddingLeft;
 			conf.paddingTop = 20;
 			conf.paddingBottom = 20;
-
-			conf.node = {};
-				conf.node.height = 25;
-				conf.node.width = 70;
-				conf.node.spacing = 10;
-				conf.node.padding = {};
-				conf.node.padding.top = 17;
+			conf.nodeSpacing = 10;
 
 			conf.levelRow = {};
 				conf.levelRow.height = 60;
@@ -45,7 +39,7 @@ export function Chart() {
 			}
 
 			this.nodeSpacing = function() {
-				return conf.node.spacing;
+				return conf.nodeSpacing;
 			}
 
 			this.nodePaddingTop = function() {
