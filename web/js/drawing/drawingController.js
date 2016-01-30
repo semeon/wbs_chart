@@ -11,16 +11,12 @@ export function Drawing(m) {
 	var chartView = {};
 	var model = m;
 	var canvasNodeId = "";
-	var canvasWidth = 650;
+	var canvasWidth = 50;
 
 	chartView = new Chart();
 
 	function BuildTreeView(node, offset) {
 		node.offset = offset;
-
-		// Create node.view objects
-		node.view = new RectNode();
-
 
 		var subTreeWidth = 80; //nodewidth placehoder
 		var childrenWidth = 0;
@@ -35,13 +31,13 @@ export function Drawing(m) {
 				if (i > 0)	childrenWidth = childrenWidth + chartView.nodeSpacing();
 			}
 		}
-
 		node.childrenWidth = childrenWidth;
+
+		node.view = new RectNode();
 		node.view.init(chartView, node, context);
 
 		node.subTreeWidth = node.view.getSubTreeWidth();
 	}
-
 
 
 	// Public
@@ -54,10 +50,10 @@ export function Drawing(m) {
 		model.reset(rawData);
 	}
 
-	this.resetCanvas = function() {
+	this.resetChartView = function() {
 		canvas = document.getElementById(canvasNodeId);
+		if (!canvas) canvas = document.createElement('canvas'); // faking canvas for calculating width before it rendered
 		context = canvas.getContext('2d');
-
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.default = 	function() {
 								context.lineWidth = 1;
@@ -65,16 +61,12 @@ export function Drawing(m) {
 								context.strokeStyle = '#000000';
 								context.font = '14pt Arial';
 							}
-	}
-
-	this.resetChartView = function() {
 		BuildTreeView(model.getNodeTree(), chartView.getPaddingLeft());
 		canvasWidth = model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
 	}
 
 	this.drawChart = function() {
 		var nodes = model.getNodeList();
-
 		for (var id in nodes) {
 			var node = nodes[id];
 			node.view.drawBox(context);

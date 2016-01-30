@@ -34,6 +34,16 @@ export function RectNode() {
 		context.textAlign = 'center';
 	}
 
+	function measureTextWidth(context) {
+		setTextContext(context);
+		var result =  context.measureText(node.label).width * 0.7;
+		result = result + paddingLeft + paddingRight;
+		result = Math.ceil(result);
+		if((result%2)) result=result+1;
+		return result;
+	}
+
+
 
 	// PUBLIC
 
@@ -41,7 +51,8 @@ export function RectNode() {
 
 		node = n;
 
-		paddingLeft = 1;
+		// Paddings
+		paddingLeft = 4;
 		paddingRight = paddingLeft;
 		paddingBottom = 8;
 
@@ -49,11 +60,10 @@ export function RectNode() {
 		height = 25;
 		bottom = top + height;
 
-		setTextContext(ctx);
-		width = ctx.measureText(node.label).width + paddingLeft + paddingRight;
-
+		width = measureTextWidth(ctx);
 		spaceWidth = width;
 		if (node.childrenWidth > spaceWidth) spaceWidth = node.childrenWidth;
+		// if((spaceWidth%2)) spaceWidth = spaceWidth+1;
 
 		offset = node.offset;
 		middle = offset + spaceWidth/2; 
@@ -70,13 +80,19 @@ export function RectNode() {
 	}
 
 
-	this.log = function() {
+	this.log = function(ctx) {
 
 		console.dir("- Node: " + node.label);
 		console.dir("-- offset: " + offset);
 		console.dir("-- spaceWidth: " + spaceWidth);
 		console.dir("-- spaceWidth/2: " + spaceWidth/2);
 		console.dir("-- width: " + width);
+
+		console.dir("-- measureTextWidth: " + measureTextWidth(ctx));
+	
+		console.dir("--> paddingLeft: " + paddingLeft);
+		console.dir("--> paddingRight: " + paddingRight);
+
 		console.dir("-- (width/2): " + (width/2));
 		console.dir("-- left: " + left);
 	}
@@ -95,8 +111,6 @@ export function RectNode() {
 		context.strokeStyle = boxBorderColour;
 		context.stroke();
 		context.fill();
-		console.dir("@@@");
-
 	}
 
 
