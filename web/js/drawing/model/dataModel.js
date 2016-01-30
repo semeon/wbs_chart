@@ -17,6 +17,7 @@ function DataModel() {
 		processedData.tree = {}; // abstract root, not a node
 			processedData.tree.label = "ROOT"; // not visible to user
 			processedData.tree.children = [];
+			processedData.tree.system = true;
 
 		processTextData();
 	}
@@ -73,7 +74,6 @@ function DataModel() {
 					nodeObject.parentId = null;
 					nodeObject.children = [];
 
-
 				// Define parentId
 					if (level == 0 || !prevNode) {
 						nodeObject.parentId = null;
@@ -103,6 +103,7 @@ function DataModel() {
 						} else {
 							// Saving a child node
 							if (processedData.nodes[nodeObject.parentId]) {
+								nodeObject.parentObj = processedData.nodes[nodeObject.parentId];
 								processedData.nodes[nodeObject.parentId].children.push(nodeObject);
 							} else { console.log("Building tree error!"); }
 						}

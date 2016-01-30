@@ -11,14 +11,14 @@ export function Drawing(m) {
 	var chartView = {};
 	var model = m;
 	var canvasNodeId = "";
-
-	chartView = new Chart();
-
-
+	var canvasWidth = 50;
 
 	function BuildTreeView(node, offset) {
 		node.offset = offset;
-		var subTreeWidth = 80; //nodewidth placehoder
+		node.view = new RectNode();
+		node.view.init(chartView, node, context);
+		node.width = node.view.getNodeWidth();
+
 		var childrenWidth = 0;
 		var rowOffset = 0;
 
@@ -32,50 +32,42 @@ export function Drawing(m) {
 			}
 		}
 
-		if (childrenWidth > subTreeWidth) subTreeWidth = childrenWidth;
-
-		node.subTreeWidth = subTreeWidth;
-
-		// Create node.view objects
-		node.view = new RectNode(chartView, node);
-
-		return subTreeWidth;
+		node.childrenWidth = childrenWidth;
+		node.view.calcSpaceWidth();
+		node.subTreeWidth = node.view.getNodeSpaceWidth();
 	}
-
 
 
 	// Public
 	this.init = function(nodeId) {
 		canvasNodeId = nodeId;
+		chartView = new Chart();
 		chartView.init();
 	}
 
-	this.getCanvasNodeId = function() {
-		return canvasNodeId;
+	this.resetChartModel = function(rawData) {
+		model.reset(rawData);
 	}
 
-	this.resetCanvas = function() {
+	this.resetChartView = function() {
 		canvas = document.getElementById(canvasNodeId);
+		if (!canvas) canvas = document.createElement('canvas'); // faking canvas for calculating width before it rendered
 		context = canvas.getContext('2d');
-
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.default = 	function() {
 								context.lineWidth = 1;
 								context.setLineDash([]);
 								context.strokeStyle = '#000000';
 								context.font = '14pt Arial';
-							}
+							};
 
-	}
-
-	this.resetChartModel = function(rawData) {
-		model.reset(rawData);
+		// BuildNodeViews(model.getNodeList());
 		BuildTreeView(model.getNodeTree(), chartView.getPaddingLeft());
+		canvasWidth = model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
 	}
 
 	this.drawChart = function() {
 		var nodes = model.getNodeList();
-
 		for (var id in nodes) {
 			var node = nodes[id];
 			node.view.drawBox(context);
@@ -86,7 +78,11 @@ export function Drawing(m) {
 		}
 	}
 
+	this.getCanvasNodeId = function() {
+		return canvasNodeId;
+	}
+
 	this.getCanvasWidth = function() {
-		return model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
+		return canvasWidth;
 	}
 }

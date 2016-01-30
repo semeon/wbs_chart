@@ -1,36 +1,122 @@
-export function RectNode(chart, node) {
+export function RectNode() {
 
-	var top = chart.levelTop(node.level);
-	var height = chart.nodeHeight();
-	var width = chart.nodeWidth();
-	var bottom = top + height;
-	var spaceWidth = node.subTreeWidth;
-	var offset = node.offset;
-	var middle = offset + spaceWidth/2; 
-	var left = offset + spaceWidth/2 - (width/2);
 
-	var topConnectorLength = 15;
-	var bottomConnectorLength = 20;
+	var self = this;
 
-	var boxFillColour = '#2196F3';
-	var boxBorderColour = '#727272';
-	var labelColour = '#FFFFFF';
-	var connColour  = '#727272';
-	var labelFont = '12px Arial';
+	var node = {};
 
-	this.log = function(context) {
+	var paddingLeft;
+	var paddingRight;
+	var paddingBottom;
+
+	var top;
+	var height;
+	var width;
+	var bottom;
+	var spaceWidth;
+	var offset;
+	var middle; 
+	var left;
+
+	var topConnectorLength;
+	var bottomConnectorLength;
+
+	var boxFillColour;
+	var boxBorderColour;
+	var labelColour;
+	var connColour;
+	var labelFont;
+
+	function setTextContext(context) {
+		context.default();
+		context.font = labelFont;
+		context.fillStyle = labelColour;
+		context.textAlign = 'center';
+	}
+
+	function measureTextWidth(context) {
+		setTextContext(context);
+		var result =  context.measureText(node.label).width * 0.7;
+		result = result + paddingLeft + paddingRight;
+		result = Math.ceil(result);
+		if((result%2)) result=result+1;
+		return result;
+	}
+
+
+
+	// PUBLIC
+
+	this.init = function(chart, n, ctx) {
+
+		node = n;
+
+
+		// Paddings
+		paddingLeft = 4;
+		paddingRight = paddingLeft;
+		paddingBottom = 8;
+
+		top = chart.levelTop(node.level);
+		height = 25;
+		bottom = top + height;
+
+		width = measureTextWidth(ctx);
+		spaceWidth = 0;
+		middle = 0; 
+		left = 0;
+
+		topConnectorLength = 15;
+		bottomConnectorLength = 20;
+
+		boxFillColour = '#2196F3';
+		boxBorderColour = '#727272';
+		labelColour = '#FFFFFF';
+		connColour  = '#727272';
+		labelFont = '12px Arial';
+	}
+
+
+	this.log = function(ctx) {
 
 		console.dir("- Node: " + node.label);
 		console.dir("-- offset: " + offset);
 		console.dir("-- spaceWidth: " + spaceWidth);
 		console.dir("-- spaceWidth/2: " + spaceWidth/2);
 		console.dir("-- width: " + width);
+
+		console.dir("-- measureTextWidth: " + measureTextWidth(ctx));
+	
+		console.dir("--> paddingLeft: " + paddingLeft);
+		console.dir("--> paddingRight: " + paddingRight);
+
 		console.dir("-- (width/2): " + (width/2));
 		console.dir("-- left: " + left);
 	}
 
-	this.drawBox = function(context) {
 
+	this.getNodeWidth = function() {
+		return width;
+	}
+
+	this.calcSpaceWidth = function() {
+		offset = node.offset;
+		spaceWidth = width;
+		if (node.childrenWidth > spaceWidth) spaceWidth = node.childrenWidth;
+	
+		if (node.parentObj && node.parentObj.view.getNodeWidth() > spaceWidth) {
+			spaceWidth = node.parentObj.view.getNodeWidth();
+		}
+		middle = offset + spaceWidth/2; 
+		left = offset + spaceWidth/2 - (width/2);
+	}
+
+	this.getNodeSpaceWidth = function() {
+		return spaceWidth;
+	}
+
+
+	this.drawBox = function(context) {
 		// Draw RECT
 		context.default();
 		context.beginPath();
@@ -42,16 +128,11 @@ export function RectNode(chart, node) {
 		context.fill();
 	}
 
+
 	this.drawText = function(context) {
-
-		// Draw TEXT
-		context.default();
 		context.beginPath();
-		context.font = labelFont;
-		context.fillStyle = labelColour;
-		context.textAlign = 'center';
-
-		context.fillText(node.label, left+width/2, top+chart.nodePaddingTop());
+		setTextContext(context);
+		context.fillText(node.label, left+width/2, bottom - paddingBottom);
 	}
 
 	this.drawParentConnector = function(context) {
