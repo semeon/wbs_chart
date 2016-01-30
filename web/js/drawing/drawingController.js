@@ -13,12 +13,12 @@ export function Drawing(m) {
 	var canvasNodeId = "";
 	var canvasWidth = 50;
 
-	chartView = new Chart();
-
 	function BuildTreeView(node, offset) {
 		node.offset = offset;
+		node.view = new RectNode();
+		node.view.init(chartView, node, context);
+		node.width = node.view.getNodeWidth();
 
-		var subTreeWidth = 80; //nodewidth placehoder
 		var childrenWidth = 0;
 		var rowOffset = 0;
 
@@ -31,18 +31,17 @@ export function Drawing(m) {
 				if (i > 0)	childrenWidth = childrenWidth + chartView.nodeSpacing();
 			}
 		}
+
 		node.childrenWidth = childrenWidth;
-
-		node.view = new RectNode();
-		node.view.init(chartView, node, context);
-
-		node.subTreeWidth = node.view.getSubTreeWidth();
+		node.view.calcSpaceWidth();
+		node.subTreeWidth = node.view.getNodeSpaceWidth();
 	}
 
 
 	// Public
 	this.init = function(nodeId) {
 		canvasNodeId = nodeId;
+		chartView = new Chart();
 		chartView.init();
 	}
 
@@ -60,7 +59,9 @@ export function Drawing(m) {
 								context.setLineDash([]);
 								context.strokeStyle = '#000000';
 								context.font = '14pt Arial';
-							}
+							};
+
+		// BuildNodeViews(model.getNodeList());
 		BuildTreeView(model.getNodeTree(), chartView.getPaddingLeft());
 		canvasWidth = model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
 	}

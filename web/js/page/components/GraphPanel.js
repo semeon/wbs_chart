@@ -10,7 +10,7 @@ export var GraphPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    console.dir("ComponentDidMount: " + this.props.graphBuilder.getCanvasWidth());
+    console.dir("ComponentDidMount. Canvas width: " + this.props.graphBuilder.getCanvasWidth());
     this.props.graphBuilder.resetChartModel(this.props.graphData);
     this.props.graphBuilder.resetChartView();
     this.props.graphBuilder.drawChart();

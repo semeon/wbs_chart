@@ -51,6 +51,7 @@ export function RectNode() {
 
 		node = n;
 
+
 		// Paddings
 		paddingLeft = 4;
 		paddingRight = paddingLeft;
@@ -61,13 +62,9 @@ export function RectNode() {
 		bottom = top + height;
 
 		width = measureTextWidth(ctx);
-		spaceWidth = width;
-		if (node.childrenWidth > spaceWidth) spaceWidth = node.childrenWidth;
-		// if((spaceWidth%2)) spaceWidth = spaceWidth+1;
-
-		offset = node.offset;
-		middle = offset + spaceWidth/2; 
-		left = offset + spaceWidth/2 - (width/2);
+		spaceWidth = 0;
+		middle = 0; 
+		left = 0;
 
 		topConnectorLength = 15;
 		bottomConnectorLength = 20;
@@ -97,9 +94,27 @@ export function RectNode() {
 		console.dir("-- left: " + left);
 	}
 
-	this.getSubTreeWidth = function() {
+
+	this.getNodeWidth = function() {
+		return width;
+	}
+
+	this.calcSpaceWidth = function() {
+		offset = node.offset;
+		spaceWidth = width;
+		if (node.childrenWidth > spaceWidth) spaceWidth = node.childrenWidth;
+	
+		if (node.parentObj && node.parentObj.view.getNodeWidth() > spaceWidth) {
+			spaceWidth = node.parentObj.view.getNodeWidth();
+		}
+		middle = offset + spaceWidth/2; 
+		left = offset + spaceWidth/2 - (width/2);
+	}
+
+	this.getNodeSpaceWidth = function() {
 		return spaceWidth;
 	}
+
 
 	this.drawBox = function(context) {
 		// Draw RECT
