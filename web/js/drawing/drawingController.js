@@ -1,21 +1,57 @@
 import {Chart} from "js/drawing/view/chart.js";
-
-
+import {RectNode} from "js/drawing/view/node.js";
 
 export function Drawing(m) {
 
+	var self = this;
+
 	var textLines = [];
-	var chartData = {};
 	var canvas = {};
 	var context = {};
-	var chart = {};
+	var chartView = {};
 	var model = m;
+	var canvasNodeId = "";
+	var canvasWidth = 50;
 
-	chart = new Chart();
+	function BuildTreeView(node, offset) {
+		node.offset = offset;
+		node.view = new RectNode();
+		node.view.init(chartView, node, context);
+		node.width = node.view.getNodeWidth();
 
-	this.resetCanvas = function(nodeId) {
-		
-		canvas = document.getElementById(nodeId);
+		var childrenWidth = 0;
+		var rowOffset = 0;
+
+		if (node.children && node.children.length>0) {
+			for(var i=0; i<node.children.length; i++) {
+				var child = node.children[i];
+				if (i > 0)	rowOffset = rowOffset + node.children[i-1].subTreeWidth + chartView.nodeSpacing();
+				BuildTreeView(child, offset + rowOffset);
+				childrenWidth = childrenWidth + child.subTreeWidth;
+				if (i > 0)	childrenWidth = childrenWidth + chartView.nodeSpacing();
+			}
+		}
+
+		node.childrenWidth = childrenWidth;
+		node.view.calcSpaceWidth();
+		node.subTreeWidth = node.view.getNodeSpaceWidth();
+	}
+
+
+	// Public
+	this.init = function(nodeId) {
+		canvasNodeId = nodeId;
+		chartView = new Chart();
+		chartView.init();
+	}
+
+	this.resetChartModel = function(rawData) {
+		model.reset(rawData);
+	}
+
+	this.resetChartView = function() {
+		canvas = document.getElementById(canvasNodeId);
+		if (!canvas) canvas = document.createElement('canvas'); // faking canvas for calculating width before it rendered
 		context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		context.default = 	function() {
@@ -23,21 +59,30 @@ export function Drawing(m) {
 								context.setLineDash([]);
 								context.strokeStyle = '#000000';
 								context.font = '14pt Arial';
-							}
+							};
 
-	}
-
-	this.resetChart = function(rawData) {
-		model.reset(rawData);
-		chartData = model.getData();
-		chart.init(chartData);
+		// BuildNodeViews(model.getNodeList());
+		BuildTreeView(model.getNodeTree(), chartView.getPaddingLeft());
+		canvasWidth = model.getNodeTree().subTreeWidth + chartView.getPaddingLeft() + chartView.getPaddingRight();
 	}
 
 	this.drawChart = function() {
-		chart.drawNodes(context);
+		var nodes = model.getNodeList();
+		for (var id in nodes) {
+			var node = nodes[id];
+			node.view.drawBox(context);
+			node.view.drawText(context);
+			if (node.level>0) node.view.drawParentConnector(context); 
+			if (node.children.length>1) node.view.drawChildrenBar(context);
+			if (node.children.length>0) node.view.drawChildrenConnector(context);
+		}
 	}
 
-	this.getChartWidth = function() {
-		return chart.getWidth();
+	this.getCanvasNodeId = function() {
+		return canvasNodeId;
+	}
+
+	this.getCanvasWidth = function() {
+		return canvasWidth;
 	}
 }
