@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"con",
+				"console"
+			],
+			[
+				"subt",
+				"subTreeWidth"
+			],
+			[
+				"node",
+				"nodeWidth"
+			],
+			[
 				"if",
 				"iframe	Tag"
 			],
@@ -31,15 +43,7 @@
 			"file": "web/index.html",
 			"settings":
 			{
-				"buffer_size": 3888,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "web/css/styles.css",
-			"settings":
-			{
-				"buffer_size": 570,
+				"buffer_size": 3555,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,31 +51,39 @@
 			"file": "web/js/app.js",
 			"settings":
 			{
-				"buffer_size": 750,
+				"buffer_size": 336,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "web/js/graph/canvas/canvasDraw.js",
+			"file": "web/js/page/pageController.js",
 			"settings":
 			{
-				"buffer_size": 1767,
+				"buffer_size": 680,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "web/js/graph/canvas/grid.js",
+			"file": "web/js/page/components/GraphPanel.js",
 			"settings":
 			{
-				"buffer_size": 1258,
+				"buffer_size": 892,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "web/js/graph/canvas/elements/node.js",
+			"file": "web/js/drawing/drawingController.js",
 			"settings":
 			{
-				"buffer_size": 811,
+				"buffer_size": 2272,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web/js/drawing/view/node.js",
+			"settings":
+			{
+				"buffer_size": 2481,
 				"line_ending": "Unix"
 			}
 		}
@@ -191,21 +203,26 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/semeon/Dev/wbs_chart",
-		"/Users/semeon/Dev/wbs_chart/web",
-		"/Users/semeon/Dev/wbs_chart/web/build",
-		"/Users/semeon/Dev/wbs_chart/web/css",
-		"/Users/semeon/Dev/wbs_chart/web/data",
-		"/Users/semeon/Dev/wbs_chart/web/js",
-		"/Users/semeon/Dev/wbs_chart/web/js/graph",
-		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas",
-		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/elements",
-		"/Users/semeon/Dev/wbs_chart/web/js/viewComponents",
-		"/Users/semeon/Dev/wbs_chart/web/libs",
-		"/Users/semeon/Dev/wbs_chart/web/libs/dagre"
+		"/Users/semeon/Dev/wbs_chart"
 	],
 	"file_history":
 	[
+		"/Users/semeon/Dev/wbs_chart/.gitignore",
+		"/Users/semeon/Dev/wbs_chart/web/js/drawing/model/dataModel.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/drawing/view/chart.js",
+		"/Users/semeon/Dev/wbs_chart/web/index.html",
+		"/Users/semeon/Dev/wbs_chart/web/js/app.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/page/pageController.js",
+		"/Users/semeon/Dev/wbs_chart/web/data/defaultData.js",
+		"/Users/semeon/Dev/wbs_chart/web/css/styles.css",
+		"/Users/semeon/Dev/wbs_chart/web/js/page/components/GraphPanel.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/drawing/drawingController.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/elements/node.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/chart.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/canvasDraw.js",
+		"/Users/semeon/Dev/wbs_chart/web/js/graph/dataProcessor.js",
+		"/Users/semeon/Dev/wbs_chart/web/css/palette.css",
+		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/elements/bar.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvas/elements.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/graph/canvasDraw.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/graph/easelDraw.js",
@@ -213,8 +230,6 @@
 		"/Users/semeon/Dev/wbs_chart/web/js/graph/goChart.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/viewComponents/GraphPanel.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/viewComponents/DataPanel.js",
-		"/Users/semeon/Dev/wbs_chart/web/data/defaultData.js",
-		"/Users/semeon/Dev/wbs_chart/web/js/graph/dataProcessor.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/graph/dGraph.js",
 		"/Users/semeon/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/semeon/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
@@ -228,15 +243,12 @@
 		"/Users/semeon/Dev/wbs_chart/web/js/dGraph.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/dg.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/dagreDrawing.js",
-		"/Users/semeon/Dev/wbs_chart/web/css/styles.css",
 		"/Users/semeon/Dev/wbs_chart/web/js/dagreDrawing_debug.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/gojsDrawing.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/canvasDrawing.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/sampledata.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/d3drawing.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/canvasDraw.js",
-		"/Users/semeon/Dev/wbs_chart/web/js/app.js",
-		"/Users/semeon/Dev/wbs_chart/web/index.html",
 		"/Users/semeon/Dev/wbs_chart/web/js/jitDrawing.js",
 		"/Users/semeon/Dev/wbs_chart/web/js/sigmaDrawing.js",
 		"/Users/semeon/Dev/wbs_chart/web/data/data.json",
@@ -320,7 +332,7 @@
 	],
 	"find":
 	{
-		"height": 46.0
+		"height": 25.0
 	},
 	"find_in_files":
 	{
@@ -335,6 +347,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"context",
+			"resultObj",
+			"bar",
+			"context.chart.",
+			"cWidth",
+			"grid",
+			"levelRowContentTop",
+			"grid",
+			"cWidth",
+			"chartDimentions",
+			"context.grid.canvasMidX",
 			"gridSettings",
 			"favicon",
 			"nodeObgect",
@@ -484,7 +507,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -493,26 +516,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3888,
+						"buffer_size": 3555,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1595,
-								1605
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"word_wrap": false
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 71.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 5,
@@ -520,26 +542,24 @@
 				},
 				{
 					"buffer": 1,
-					"file": "web/css/styles.css",
+					"file": "web/js/app.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 570,
+						"buffer_size": 336,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								134,
-								134
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -550,24 +570,25 @@
 				},
 				{
 					"buffer": 2,
-					"file": "web/js/app.js",
+					"file": "web/js/page/pageController.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 750,
+						"buffer_size": 680,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								321,
-								270
+								226,
+								226
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -578,56 +599,58 @@
 				},
 				{
 					"buffer": 3,
-					"file": "web/js/graph/canvas/canvasDraw.js",
+					"file": "web/js/page/components/GraphPanel.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1767,
+						"buffer_size": 892,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								794,
-								794
+								346,
+								346
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JSX/JSX.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "web/js/graph/canvas/grid.js",
+					"file": "web/js/drawing/drawingController.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1258,
+						"buffer_size": 2272,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								306,
-								306
+								1266,
+								1266
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JSX/JSX.tmLanguage"
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 413.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -635,31 +658,31 @@
 				},
 				{
 					"buffer": 5,
-					"file": "web/js/graph/canvas/elements/node.js",
+					"file": "web/js/drawing/view/node.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 811,
+						"buffer_size": 2481,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								74,
-								74
+								2260,
+								2260
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 68.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -2028,7 +2051,7 @@
 	"project": "wbs.sublime-project",
 	"replace":
 	{
-		"height": 78.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
