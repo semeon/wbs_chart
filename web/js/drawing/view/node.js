@@ -11,6 +11,7 @@ export function RectNode() {
 
 	var top;
 	var height;
+	var minWidth;
 	var width;
 	var bottom;
 	var spaceWidth;
@@ -40,6 +41,8 @@ export function RectNode() {
 		result = result + paddingLeft + paddingRight;
 		result = Math.ceil(result);
 		if((result%2)) result=result+1;
+		
+		if (result < minWidth) result = minWidth; 
 		return result;
 	}
 
@@ -61,6 +64,7 @@ export function RectNode() {
 		height = 25;
 		bottom = top + height;
 
+		minWidth = 80;
 		width = measureTextWidth(ctx);
 		spaceWidth = 0;
 		middle = 0; 
