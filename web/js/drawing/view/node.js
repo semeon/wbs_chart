@@ -1,4 +1,4 @@
-export function RectNode() {
+export function RectNodeView() {
 
 
 	var self = this;
@@ -50,12 +50,12 @@ export function RectNode() {
 
 	// PUBLIC
 
-	this.init = function(chart, n, ctx) {
+	this.init = function(n, o, chart, ctx) {
 
 		node = n;
 
+		offset = o;
 
-		// Paddings
 		paddingLeft = 4;
 		paddingRight = paddingLeft;
 		paddingBottom = 8;
@@ -104,7 +104,6 @@ export function RectNode() {
 	}
 
 	this.calcSpaceWidth = function() {
-		offset = node.offset;
 		spaceWidth = width;
 		if (node.childrenWidth > spaceWidth) spaceWidth = node.childrenWidth;
 	
@@ -119,7 +118,6 @@ export function RectNode() {
 		return spaceWidth;
 	}
 
-
 	this.drawBox = function(context) {
 		// Draw RECT
 		context.default();
@@ -131,7 +129,6 @@ export function RectNode() {
 		context.stroke();
 		context.fill();
 	}
-
 
 	this.drawText = function(context) {
 		context.beginPath();
