@@ -1,3 +1,5 @@
+import {NodeModel} from "js/model/nodeModel.js";
+
 export var model = new DataModel();
 
 
@@ -42,9 +44,7 @@ function DataModel() {
 
 		var lines = [];
 		lines = S(processedText).lines();
-
-		console.dir(lines);
-
+		// console.dir(lines);
 		return lines;
 	}
 
@@ -60,53 +60,47 @@ function DataModel() {
 
 		for (var i=0; i<lines.length; i++) {
 			var line = lines[i];
+
 			if (S(line).length > 0) {
-				
-				// Create node
+				var id = "n"+i;
 				var level = S(line).count(indentSymbol);
 				var label = S(line).replaceAll(indentSymbol, "").trim().s;
-				var nodeObject = {};
-					nodeObject.id = "n"+i;
-					nodeObject.level = level;
-					nodeObject.label = label;
-					nodeObject.parentId = null;
-					nodeObject.children = [];
+				var parentId = null;
+				var parentNode = null;
+
 
 				// Define parentId
-					if (level == 0 || !prevNode) {
-						nodeObject.parentId = null;
-						lastParentIdByLevel[level] = nodeObject.id;
+					if (level == 0 || !prevNode) { 	lastParentIdByLevel[0] = id;
 					} else {
 						if (prevNode.level < level) {
-							nodeObject.parentId = prevNode.id;
+							parentId = prevNode.id;
 							lastParentIdByLevel[level-1] = prevNode.id;
-						} else {
-							nodeObject.parentId = lastParentIdByLevel[level-1];
+						} else { parentId = lastParentIdByLevel[level-1];
 						}
 					}
+					if (processedData.nodes[parentId]) parentNode = processedData.nodes[parentId];
+
 
 				// Save node
-					prevNode = nodeObject;
-					// Update node list
-					processedData.nodes[nodeObject.id] = nodeObject;
-					
-					// Update level list -- Do i need it at all?
-					// if (processedData.levels[level] === undefined) { processedData.levels[level] = [] }
-					// processedData.levels[level].push(nodeObject);
+					var nodeObject = new NodeModel();
+					nodeObject.init(id, label, level, parentId, parentNode);
 
-					// Update tree
-						if (nodeObject.parentId == null ) {
-							// Saving a root node
-							processedData.tree.children.push(nodeObject);
-						} else {
-							// Saving a child node
-							if (processedData.nodes[nodeObject.parentId]) {
-								nodeObject.parentObj = processedData.nodes[nodeObject.parentId];
-								processedData.nodes[nodeObject.parentId].children.push(nodeObject);
-							} else { console.log("Building tree error!"); }
+					// Update node list
+					processedData.nodes[id] = nodeObject;
+
+					if (parentId == null ) { 
+						// ROOT Node
+						processedData.tree.children.push(nodeObject);  
+					} else {
+						// OTHER nodes
+						if (parentNode) {
+							parentNode.children.push(nodeObject);
 						}
+					}
+				prevNode = nodeObject;
 			}
 		}
+
 	}
 }
 
