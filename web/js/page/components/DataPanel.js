@@ -9,7 +9,6 @@ export var DataPanel = React.createClass({
   },
 
   handleTextChange: function(e) {
-    console.dir(e.target.value);
     this.setState({text: e.target.value});
     this.props.draw(e.target.value);
   },
