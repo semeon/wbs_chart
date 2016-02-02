@@ -59,9 +59,9 @@ export var text3 =
 export var text4 = 
 `App
 > Data
-> View
-> Controller
->> 1
+> Page 
+>> View
+>> Controller
 > Drawing
 >> Model
 >> View

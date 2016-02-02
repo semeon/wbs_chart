@@ -1,5 +1,5 @@
 import {Chart} from "js/drawing/view/chart.js";
-import {RectNode} from "js/drawing/view/node.js";
+import {RectNodeView} from "js/drawing/view/node.js";
 
 export function Drawing(m) {
 
@@ -14,10 +14,9 @@ export function Drawing(m) {
 	var canvasWidth = 50;
 
 	function BuildTreeView(node, offset) {
-		node.offset = offset;
-		node.view = new RectNode();
-		node.view.init(chartView, node, context);
-		node.width = node.view.getNodeWidth();
+
+		node.view = new RectNodeView();
+		node.view.init(node, offset, chartView,  context);
 
 		var childrenWidth = 0;
 		var rowOffset = 0;
