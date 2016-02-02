@@ -12,8 +12,6 @@ function DataModel() {
 		rawData = data;
 		processedData = {};
 		processedData.nodes = {};
-		processedData.levels = {};
-		processedData.edges = [];
 		processedData.tree = {}; // abstract root, not a node
 			processedData.tree.label = "ROOT"; // not visible to user
 			processedData.tree.children = [];
