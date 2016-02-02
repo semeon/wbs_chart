@@ -14,6 +14,7 @@ export function Drawing(m) {
 	var canvasWidth = 50;
 
 	function BuildTreeView(node, offset) {
+
 		node.view = new RectNodeView();
 		node.view.init(node, offset, chartView,  context);
 
