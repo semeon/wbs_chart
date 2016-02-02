@@ -1,4 +1,4 @@
-import {NodeModel} from "js/model/nodeModel.js";
+import {NodeModel} from "js/drawing/model/nodeModel.js";
 
 export var model = new DataModel();
 
